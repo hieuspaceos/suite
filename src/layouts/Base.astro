@@ -52,5 +52,13 @@ const t = i18n;
   </div>
 </footer>
 
+<script>
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('details.lang-menu[open]').forEach((d) => {
+      if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+  });
+</script>
+
 </body>
 </html>
