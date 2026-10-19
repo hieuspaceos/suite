@@ -1,0 +1,56 @@
+---
+import { apps } from '../data/apps.js';
+const { app, t, lang } = Astro.props;
+const others = apps.filter((a) => a.id !== app.id);
+const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
+---
+
+<section class="app-hero container">
+  <img class="big-icon" src={app.icon} alt={`${app.name} icon`} width="108" height="108">
+  <p class="replaces">{t.replaces} {app.replaces[lang]}</p>
+  <h1>{app.name}</h1>
+  <p class="tagline">{app.tagline[lang]}</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href={`${app.repo}/releases/latest`} target="_blank" rel="noopener">{t.download}</a>
+    <a class="btn btn-ghost" href={app.repo} target="_blank" rel="noopener">{t.view_src}</a>
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-item"><span>{t.meta_platform === 'Mac' ? (lang==='vi'?'Nền tảng':'Platform') : 'Platform'}</span><b>Mac</b></div>
+    <div class="meta-item"><span>{t.meta_version}</span><b>{app.version}</b></div>
+    <div class="meta-item"><span>macOS</span><b>14+</b></div>
+    <div class="meta-item"><span>{t.meta_size}</span><b>{app.size}</b></div>
+    <div class="meta-item"><span>{lang === 'vi' ? 'Quyền' : 'Permission'}</span><b>{app.permission[lang]}</b></div>
+  </div>
+
+  <div class="hero-shot">
+    <img src={app.hero} alt={`${app.name} in action`} loading="eager">
+  </div>
+</section>
+
+<section class="container">
+  <p class="app-desc">{app.desc[lang]}</p>
+  <ul class="feat-list">
+    {app.features[lang].map((f) => <li>{f}</li>)}
+  </ul>
+  <p class="perm">{t.perm_note} <b>{app.permission[lang]}</b> — {lang === 'vi'
+    ? 'macOS sẽ hỏi khi mở lần đầu; cấp trong System Settings → Privacy & Security.'
+    : 'macOS will ask on first launch; grant under System Settings → Privacy & Security.'}</p>
+</section>
+
+<section class="more">
+  <div class="container">
+    <h2 class="section-title">{t.more_apps}</h2>
+    <div class="more-grid">
+      {others.map((o) => (
+        <a class="more-tile" href={appHref(o.id)}>
+          <img src={o.icon} alt={`${o.name} icon`}>
+          <div><b>{o.name}</b><small>{o.tagline[lang]}</small></div>
+        </a>
+      ))}
+      <a class="more-tile" href="https://github.com/hieuspaceos" target="_blank" rel="noopener">
+        <div><b>GitHub</b><small>hieuspaceos</small></div>
+      </a>
+    </div>
+  </div>
+</section>

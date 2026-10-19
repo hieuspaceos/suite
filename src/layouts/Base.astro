@@ -1,0 +1,45 @@
+---
+const { title, desc, lang = 'en', i18n } = Astro.props;
+const t = i18n;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={desc}>
+<link rel="icon" href="/assets/swiftshot.png">
+<link rel="stylesheet" href="/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href={lang === 'vi' ? '/vi/' : '/'}>
+      <span class="brand-mark">◆</span> suite<span class="brand-dot">.</span><span class="brand-sub">hieuspace</span>
+    </a>
+    <nav class="nav-links">
+      <a href={lang === 'vi' ? '/vi/#apps' : '/#apps'}>{lang === 'vi' ? 'Apps' : 'Apps'}</a>
+      <a href={lang === 'vi' ? '/vi/#install' : '/#install'}>{lang === 'vi' ? 'Cài đặt' : 'Install'}</a>
+      <a href="https://github.com/hieuspaceos" target="_blank" rel="noopener">GitHub</a>
+      <a class="lang-switch" href={t.lang_href}>{t.lang_link}</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <slot />
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>{t.footer}</p>
+  </div>
+</footer>
+
+</body>
+</html>

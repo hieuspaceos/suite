@@ -1,0 +1,62 @@
+---
+import { apps } from '../data/apps.js';
+const { t, lang } = Astro.props;
+const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
+---
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <p class="kicker">{t.kicker}</p>
+    <h1>{t.h1a} <span class="grad">{t.h1b}</span>{t.h1c}</h1>
+    <p class="lede">{t.lede}</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#apps">{t.cta_apps}</a>
+      <a class="btn btn-ghost" href="https://github.com/hieuspaceos" target="_blank" rel="noopener">{t.cta_gh}</a>
+    </div>
+    <p class="req">{t.req}</p>
+  </div>
+</section>
+
+<section id="apps" class="apps container">
+  <h2 class="section-title">{t.apps_title}</h2>
+  <div class="apps-strip">
+    {apps.map((a) => (
+      <article class="app-tile">
+        <a href={appHref(a.id)}>
+          <img class="app-tile-img" src={a.hero} alt={`${a.name} screenshot`} loading="lazy">
+        </a>
+        <div class="app-tile-body">
+          <img class="app-tile-icon" src={a.icon} alt={`${a.name} icon`} width="56" height="56">
+          <div>
+            <p class="replaces">{t.replaces} {a.replaces[lang]}</p>
+            <h3><a href={appHref(a.id)}>{a.name}</a></h3>
+            <p class="tagline">{a.tagline[lang]}</p>
+          </div>
+        </div>
+        <div class="tile-cta">
+          <a class="btn btn-ghost" href={appHref(a.id)}>{lang === 'vi' ? 'Xem chi tiết →' : 'Learn more →'}</a>
+        </div>
+      </article>
+    ))}
+    <article class="app-tile app-tile--soon">
+      <div class="app-tile-body">
+        <div>
+          <h3 class="dim">{t.soon_title}</h3>
+          <p class="tagline dim">{t.soon_desc}</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="install" class="install">
+  <div class="container">
+    <h2 class="section-title">{t.install_title}</h2>
+    <ol class="steps">
+      {t.steps.map((s, i) => (
+        <li><span class="step-n">{i + 1}</span><div><b>{s[0]}</b>{s[1]}</div></li>
+      ))}
+    </ol>
+  </div>
+</section>

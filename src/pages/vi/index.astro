@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { t } from '../../data/apps.js';
+const T = t.vi;
+---
+<Base title="Suite — App macOS mã nguồn mở" desc={T.lede} lang="vi" i18n={T}>
+  <Home t={T} lang="vi" />
+</Base>
