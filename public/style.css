@@ -165,10 +165,11 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
   .footer-inner { padding: 20px 0; font-size: 13px; }
 }
 
-/* language dropdown */
-.lang-menu { position: relative; display: inline-block; }
-.lang-menu summary { list-style: none; cursor: pointer; border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; display: inline-flex; align-items: center; color: var(--fg); }
-.lang-menu summary::-webkit-details-marker { display: none; }
-.lang-drop { position: absolute; right: 0; top: calc(100% + 6px); background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 6px; display: flex; flex-direction: column; min-width: 130px; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
-.lang-drop a { padding: 7px 12px; border-radius: 6px; font-size: 13px; white-space: nowrap; }
-.lang-drop a:hover { background: var(--surface); }
+/* language dropdown — details/summary needs explicit block display or
+   Safari treats it as inline and the absolute drop escapes to the edge */
+details.lang-menu { position: relative; display: inline-block; }
+details.lang-menu summary { list-style: none; cursor: pointer; border: 1px solid var(--border); border-radius: 999px; padding: 5px 10px; display: inline-flex; align-items: center; color: var(--fg); }
+details.lang-menu summary::-webkit-details-marker { display: none; }
+details.lang-menu .lang-drop { position: absolute; right: 0; top: calc(100% + 8px); background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 6px; display: flex; flex-direction: column; gap: 2px; min-width: 140px; z-index: 100; box-shadow: 0 12px 32px rgba(0,0,0,.55); }
+details.lang-menu .lang-drop a { display: block; padding: 8px 12px; border-radius: 6px; font-size: 13px; white-space: nowrap; color: var(--fg); }
+details.lang-menu .lang-drop a:hover { background: var(--surface); color: var(--fg); }
