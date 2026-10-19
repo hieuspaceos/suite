@@ -74,10 +74,10 @@ export const apps = [
 export const t = {
   en: {
     kicker: 'Open-source · No subscription · No telemetry',
-    h1a: 'Your own',
-    h1b: 'Setapp',
-    h1c: ', free forever.',
-    lede: 'A growing suite of tiny, focused macOS utilities — screenshots, window gestures, and more — each replacing a paid app. Native Swift, free and open source.',
+    h1a: 'Every app your',
+    h1b: 'Mac deserves',
+    h1c: '. Free.',
+    lede: 'A growing suite of tiny, focused macOS utilities — screenshots, window gestures, and more — each a free, open-source replacement for a paid app. Native Swift, no subscription.',
     cta_apps: 'Browse the apps ↓',
     cta_gh: 'GitHub ★',
     req: 'macOS 14+ · Apple Silicon',
@@ -104,9 +104,9 @@ export const t = {
   },
   vi: {
     kicker: 'Mã nguồn mở · Không subscription · Không telemetry',
-    h1a: 'Setapp',
-    h1b: 'của riêng bạn',
-    h1c: ', miễn phí mãi mãi.',
+    h1a: 'Chiếc ',
+    h1b: 'Mac của bạn',
+    h1c: ' xứng đáng hơn. Miễn phí.',
     lede: 'Bộ tiện ích macOS nhỏ gọn đang tăng dần — chụp màn hình, gesture cửa sổ, và nhiều hơn nữa — mỗi app thay thế một ứng dụng trả phí. Swift native, miễn phí và mã nguồn mở.',
     cta_apps: 'Xem các app ↓',
     cta_gh: 'GitHub ★',
