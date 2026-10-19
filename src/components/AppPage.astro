@@ -29,9 +29,15 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
 </section>
 <section class="container">
   <p class="app-desc">{app.desc[lang]}</p>
-  <ul class="feat-list">
-    {app.features[lang].map((f) => <li>{f}</li>)}
-  </ul>
+  <div class="feature-grid">
+    {app.features[lang].map((f, i) => (
+      <div class="feature-block">
+        <div class="fi">{['⌘','✎','⧉','⛶','⚙'][i % 5]}</div>
+        <b>{f.split('·')[0].split('—')[0].trim()}</b>
+        <p>{f}</p>
+      </div>
+    ))}
+  </div>
   <p class="perm">{t.perm_note} <b>{app.permission[lang]}</b> — {lang === 'vi'
     ? 'macOS sẽ hỏi khi mở lần đầu; cấp trong System Settings → Privacy & Security.'
     : 'macOS will ask on first launch; grant under System Settings → Privacy & Security.'}</p>

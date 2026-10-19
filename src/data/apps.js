@@ -88,6 +88,7 @@ export const t = {
     soon_title: 'More coming',
     soon_desc: 'New replacements land here as they’re built.',
     install_title: 'Install in 30 seconds',
+    install_sub: 'Zip → Applications → open → grant permission. No Xcode needed.',
     steps: [
       ['Download', ' the zip from the Releases page and unzip it.'],
       ['Drag', ' the .app into /Applications.'],
@@ -109,6 +110,7 @@ export const t = {
     h1b: 'Mac của bạn',
     h1c: ' xứng đáng hơn. Miễn phí.',
     lede: 'Bộ tiện ích macOS nhỏ gọn đang tăng dần — chụp màn hình, gesture cửa sổ, và nhiều hơn nữa — mỗi app thay thế một ứng dụng trả phí. Swift native, miễn phí và mã nguồn mở.',
+    apps_sub: 'Mỗi app thay thế một ứng dụng trả phí — miễn phí, native, mã nguồn mở.',
     cta_apps: 'Xem các app ↓',
     cta_gh: 'GitHub ★',
     req: 'macOS 14+ · Apple Silicon',
@@ -118,6 +120,7 @@ export const t = {
     soon_title: 'Sắp có thêm',
     soon_desc: 'Các app thay thế mới sẽ xuất hiện tại đây.',
     install_title: 'Cài trong 30 giây',
+    install_sub: 'Zip → Applications → mở → cấp quyền. Không cần Xcode.',
     steps: [
       ['Tải', ' file zip trong trang Releases rồi giải nén.'],
       ['Kéo', ' file .app vào /Applications.'],
