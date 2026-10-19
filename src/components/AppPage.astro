@@ -57,7 +57,7 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
       <span>{t.vs_ram} (idle)</span><span class="vs-ours">{app.ram}</span><span>{app.rival.ram}</span>
     </div>
     <div class="vs-row">
-      <span>{t.vs_ram_use}</span><span class="vs-ours">{app.ram_use}</span><span>—</span>
+      <span>{t.vs_ram_use}</span><span class="vs-ours">{app.ram_use}</span><span>{app.rival.ram_use ?? '—'}</span>
     </div>
     <div class="vs-row">
       <span>{t.vs_price}</span><span class="vs-ours">Free · Open source</span><span>{app.rival.price}</span>
