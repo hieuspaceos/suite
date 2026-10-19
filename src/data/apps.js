@@ -91,8 +91,8 @@ export const apps = [
   },
   {
     id: 'clipspot',
-    ram: '~52 MB',
-    ram_use: '~52 MB',
+    ram: '~24 MB',
+    ram_use: '~24 MB',
     rival: { name: 'Paste', size: '~60 MB', ram: '~34 MB', price: '$14.99/yr subscription' },
     cat: 'productivity',
     name: 'ClipSpot',
