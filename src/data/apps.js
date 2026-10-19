@@ -78,6 +78,7 @@ export const t = {
     h1b: 'Mac deserves',
     h1c: '. Free.',
     lede: 'A growing suite of tiny, focused macOS utilities — screenshots, window gestures, and more — each a free, open-source replacement for a paid app. Native Swift, no subscription.',
+    apps_sub: 'Each one replaces a paid app — free, native, open source.',
     cta_apps: 'Browse the apps ↓',
     cta_gh: 'GitHub ★',
     req: 'macOS 14+ · Apple Silicon',

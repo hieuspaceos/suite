@@ -15,16 +15,21 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
       <a class="btn btn-ghost" href="https://github.com/hieuspaceos" target="_blank" rel="noopener">{t.cta_gh}</a>
     </div>
     <p class="req">{t.req}</p>
+    <div class="device">
+      <div class="device-bar"><i></i><i></i><i></i></div>
+      <video src="/assets/swiftshot-demo.mp4" poster="/assets/swiftshot-hero.jpg" autoplay muted loop playsinline></video>
+    </div>
   </div>
 </section>
 
 <section id="apps" class="apps container">
   <h2 class="section-title">{t.apps_title}</h2>
-  <div class="apps-strip">
+  <p class="section-sub">{t.apps_sub}</p>
+  <div class="apps-grid">
     {apps.map((a) => (
       <article class="app-tile">
-        <a href={appHref(a.id)}>
-          <img class="app-tile-img" src={a.hero} alt={`${a.name} screenshot`} loading="lazy">
+        <a class="app-tile-media" href={appHref(a.id)}>
+          <img src={a.hero} alt={`${a.name} screenshot`} loading="lazy">
         </a>
         <div class="app-tile-body">
           <img class="app-tile-icon" src={a.icon} alt={`${a.name} icon`} width="56" height="56">
@@ -36,6 +41,7 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
         </div>
         <div class="tile-cta">
           <a class="btn btn-ghost" href={appHref(a.id)}>{lang === 'vi' ? 'Xem chi tiết →' : 'Learn more →'}</a>
+          <a class="btn btn-primary" href={`${a.repo}/releases/latest`} target="_blank" rel="noopener">{t.download}</a>
         </div>
       </article>
     ))}
@@ -53,9 +59,10 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
 <section id="install" class="install">
   <div class="container">
     <h2 class="section-title">{t.install_title}</h2>
+    <p class="section-sub">{t.install_sub}</p>
     <ol class="steps">
       {t.steps.map((s, i) => (
-        <li><span class="step-n">{i + 1}</span><div><b>{s[0]}</b>{s[1]}</div></li>
+        <li><span class="step-n">{i + 1}</span><b>{s[0]}</b><span class="txt">{s[1]}</span></li>
       ))}
     </ol>
   </div>
