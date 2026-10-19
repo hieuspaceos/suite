@@ -44,6 +44,24 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
     : 'macOS will ask on first launch; grant under System Settings → Privacy & Security.'}</p>
 </section>
 
+<section class="container vs-wrap">
+  <h2 class="section-title">{t.vs_title}{app.rival.name}</h2>
+  <div class="vs-table">
+    <div class="vs-row vs-head">
+      <span></span><span class="vs-ours">{app.name}</span><span>{app.rival.name}</span>
+    </div>
+    <div class="vs-row">
+      <span>{t.vs_size}</span><span class="vs-ours">{app.size}</span><span>{app.rival.size}</span>
+    </div>
+    <div class="vs-row">
+      <span>{t.vs_ram}</span><span class="vs-ours">{app.ram}</span><span>{app.rival.ram}</span>
+    </div>
+    <div class="vs-row">
+      <span>{t.vs_price}</span><span class="vs-ours">Free · Open source</span><span>{app.rival.price}</span>
+    </div>
+  </div>
+</section>
+
 <section class="more">
   <div class="container">
     <h2 class="section-title">{t.more_apps}</h2>
