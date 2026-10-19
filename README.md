@@ -20,11 +20,12 @@ Each app replaces a paid tool — native Swift, no subscription, no telemetry.
 |---|---|---|---|
 | <img src="public/assets/swiftshot.png" width="28" valign="middle"> **SwiftShot** | CleanShot X | Menubar screenshot utility — ⌃⌘1 region, ⌃⌘2 fullscreen, full annotation editor (pen, arrow, highlight, mosaic, text), floating preview, clipboard or save. | [swiftshot](https://github.com/hieuspaceos/swiftshot) |
 | <img src="public/assets/swishlite.png" width="28" valign="middle"> **SwishLite** | Swish | Trackpad window snapping — two-finger title-bar swipes → halves/thirds/quarters, pinch to maximize/quit, Dock gestures, haptics. | [swishlite](https://github.com/hieuspaceos/swishlite) |
+| <img src="public/assets/clipspot.png" width="28" valign="middle"> **ClipSpot** | Paste | Spotlight-style clipboard palette — ⌘⇧V pops it, type to filter, Enter pastes back. Text, images, files persisted across restarts. | [clipspot](https://github.com/hieuspaceos/clipspot) |
 
 Every app page carries a full rendered feature demo:
 
 <p>
-<img src="public/assets/swiftshot-hero.jpg" width="48%"> <img src="public/assets/swishlite-hero.jpg" width="48%">
+<img src="public/assets/swiftshot-hero.jpg" width="32%"> <img src="public/assets/swishlite-hero.jpg" width="32%"> <img src="public/assets/clipspot-hero.jpg" width="32%">
 </p>
 
 ## Install an app
