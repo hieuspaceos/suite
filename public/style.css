@@ -40,10 +40,10 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 .lang-switch { border: 1px solid var(--border); padding: 4px 12px; border-radius: 999px; color: var(--fg) !important; }
 
 /* HERO */
-.hero { position: relative; padding: 100px 0 60px; text-align: center; overflow: hidden; }
+.hero { position: relative; padding: 72px 0 44px; text-align: center; overflow: hidden; }
 .hero-glow { position: absolute; inset: -30% 15% auto; height: 640px; background: radial-gradient(ellipse at center, rgba(255,106,92,.16), transparent 65%); pointer-events: none; }
 .kicker { color: var(--accent2); font-weight: 600; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 18px; }
-.hero h1 { font-size: clamp(40px, 6.5vw, 70px); font-weight: 800; letter-spacing: -.035em; line-height: 1.05; margin-bottom: 22px; }
+.hero h1 { font-size: clamp(36px, 5.5vw, 58px); font-weight: 800; letter-spacing: -.035em; line-height: 1.05; margin-bottom: 22px; }
 .grad { background: linear-gradient(100deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .lede { max-width: 580px; margin: 0 auto 34px; color: var(--muted); font-size: 18px; }
 .hero-cta { display: flex; gap: 14px; justify-content: center; margin-bottom: 20px; }
@@ -80,7 +80,7 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 .app-tile-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
 .app-tile:hover .app-tile-media img { transform: scale(1.03); }
 .app-tile-body { padding: 22px; display: flex; gap: 16px; align-items: flex-start; }
-.app-tile-icon { width: 56px; height: 56px; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+.app-tile-icon { width: 44px; height: 44px; border-radius: 11px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
 .app-tile h3 { font-size: 20px; font-weight: 700; }
 .replaces { font-size: 12px; color: var(--accent2); font-weight: 600; margin-bottom: 3px; letter-spacing: .02em; }
 .app-tile .tagline { color: var(--muted); font-size: 14px; line-height: 1.5; }
@@ -104,22 +104,22 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 .footer a { color: var(--fg); }
 
 /* APP DETAIL PAGE */
-.app-hero { padding: 70px 0 44px; text-align: center; }
-.app-hero .big-icon { width: 112px; height: 112px; border-radius: 28px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
-.app-hero h1 { font-size: clamp(36px, 5vw, 52px); font-weight: 800; letter-spacing: -.03em; margin: 20px 0 6px; }
+.app-hero { padding: 52px 0 36px; text-align: center; }
+.app-hero .big-icon { width: 80px; height: 80px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.app-hero h1 { font-size: clamp(30px, 4.2vw, 42px); font-weight: 800; letter-spacing: -.03em; margin: 20px 0 6px; }
 .app-hero .tagline { color: var(--muted); font-size: 19px; margin-bottom: 28px; }
 .meta-row { display: flex; flex-wrap: wrap; justify-content: center; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 36px auto 0; max-width: 760px; background: var(--bg2); }
 .meta-item { padding: 14px 28px; border-right: 1px solid var(--border); font-size: 13px; text-align: left; }
 .meta-item:last-child { border-right: 0; }
 .meta-item b { display: block; font-size: 14px; }
 .meta-item span { color: var(--muted); font-size: 12px; }
-.hero-shot { margin: 48px auto 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 34px 90px rgba(0,0,0,.55); max-width: 940px; background: #000; }
+.hero-shot { margin: 36px auto 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 34px 90px rgba(0,0,0,.55); max-width: 840px; background: #000; }
 .hero-shot video, .hero-shot img { width: 100%; display: block; }
 
 .app-desc { max-width: 700px; margin: 60px auto 0; font-size: 18px; color: #C9D0E4; }
 
 /* feature grid — Setapp style blocks */
-.feature-grid { max-width: 940px; margin: 44px auto 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.feature-grid { max-width: 840px; margin: 44px auto 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
 .feature-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
 .feature-block .fi { width: 40px; height: 40px; border-radius: 11px; background: linear-gradient(135deg, rgba(255,106,92,.25), rgba(255,106,92,.08)); border: 1px solid rgba(255,106,92,.35); display: grid; place-items: center; font-size: 19px; margin-bottom: 14px; }
 .feature-block b { display: block; font-size: 15px; margin-bottom: 5px; }
