@@ -214,3 +214,10 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 .vs-ours { color: var(--accent); font-weight: 600; }
 .gh-link { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); color: var(--muted); transition: all .18s; }
 .gh-link:hover { color: var(--fg); border-color: var(--fg); }
+
+/* mobile heading + dropdown polish */
+@media (max-width: 560px) {
+  .hero h1 { font-size: 26px; line-height: 1.12; }
+  .kicker { font-size: 11px; letter-spacing: .12em; }
+  .lang-menu { flex-shrink: 0; }
+}
