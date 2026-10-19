@@ -9,7 +9,7 @@ export const apps = [
     hero: '/assets/swiftshot-hero.jpg',
     repo: 'https://github.com/hieuspaceos/swiftshot',
     version: 'v1.0.1',
-    size: '1.6 MB',
+    size: '2.6 MB',
     replaces: { en: 'CleanShot X', vi: 'CleanShot X' , ja: 'CleanShot X', ko: 'CleanShot X', zh: 'CleanShot X' },
     tagline: {
       en: 'Take better screenshots, annotate instantly',
@@ -53,7 +53,7 @@ export const apps = [
     hero: '/assets/swishlite-hero.jpg',
     repo: 'https://github.com/hieuspaceos/swishlite',
     version: 'v1.0.1',
-    size: '0.3 MB',
+    size: '294 KB',
     replaces: { en: 'Swish', vi: 'Swish' , ja: 'Swish', ko: 'Swish', zh: 'Swish' },
     tagline: {
       en: 'Trackpad gestures for window management',
@@ -97,7 +97,7 @@ export const apps = [
     hero: '/assets/clipspot-hero.jpg',
     repo: 'https://github.com/hieuspaceos/clipspot',
     version: 'v1.0.1',
-    size: '0.5 MB',
+    size: '482 KB',
     replaces: { en: 'Paste', vi: 'Paste' , ja: 'Paste', ko: 'Paste', zh: 'Paste' },
     tagline: {
       en: 'Your clipboard, one hotkey away',
@@ -141,7 +141,7 @@ export const apps = [
     hero: '/assets/flipswitch-hero.jpg',
     repo: 'https://github.com/hieuspaceos/flipswitch',
     version: 'v1.0.1',
-    size: '0.4 MB',
+    size: '424 KB',
     replaces: { en: 'One Switch', vi: 'One Switch' , ja: 'One Switch', ko: 'One Switch', zh: 'One Switch' },
     tagline: {
       en: 'Every system toggle, one menubar icon',
