@@ -69,6 +69,76 @@ export const apps = [
     },
     permission: { en: 'Accessibility', vi: 'Accessibility' },
   },
+  {
+    id: 'clipspot',
+    name: 'ClipSpot',
+    icon: '/assets/clipspot.png',
+    hero: '/assets/clipspot-hero.jpg',
+    repo: 'https://github.com/hieuspaceos/clipspot',
+    version: '1.0.0',
+    size: '0.5 MB',
+    replaces: { en: 'Paste', vi: 'Paste' },
+    tagline: {
+      en: 'Your clipboard, one hotkey away',
+      vi: 'Clipboard của bạn, chỉ một phím tắt',
+    },
+    desc: {
+      en: 'Spotlight-style clipboard palette — ⌘⇧V pops it, type to filter, Enter pastes straight back. Text, images and files persisted across restarts.',
+      vi: 'Palette clipboard kiểu Spotlight — ⌘⇧V mở ra, gõ để lọc, Enter dán lại ngay. Text, ảnh và file được lưu qua restart.',
+    },
+    features: {
+      en: [
+        '⌘⇧V palette — list + preview, filter as you type',
+        '⌘1-9 quick paste · pin · paste as plain text',
+        'Persistent history (JSON + PNG thumbs), survives restart',
+        'Launch at login · hide menubar icon · adjustable capacity',
+        'Keyboard-only: arrows, ⏎, esc, click-outside dismiss',
+      ],
+      vi: [
+        '⌘⇧V palette — list + preview, gõ là lọc ngay',
+        '⌘1-9 dán nhanh · pin · dán dạng plain text',
+        'History lưu bền (JSON + PNG thumbs), sống qua restart',
+        'Mở cùng macOS · ẩn icon menubar · chỉnh sức chứa',
+        'Thuần phím: arrows, ⏎, esc, click ra ngoài là đóng',
+      ],
+    },
+    permission: { en: 'Accessibility (paste-back)', vi: 'Accessibility (dán lại)' },
+  },
+  {
+    id: 'vdisplay',
+    name: 'vdisplay',
+    icon: '/assets/vdisplay.png',
+    hero: '/assets/vdisplay-hero.jpg',
+    repo: 'https://github.com/hieuspaceos/vdisplay',
+    version: '0.1',
+    size: '0.05 MB',
+    replaces: { en: 'BetterDisplay (dummy displays)', vi: 'BetterDisplay (dummy displays)' },
+    tagline: {
+      en: 'A free virtual display in one tiny binary',
+      vi: 'Một màn hình ảo miễn phí trong một binary nhỏ gọn',
+    },
+    desc: {
+      en: 'Creates a real CGVirtualDisplay — macOS treats it as a physical monitor you can move windows onto and record with screencapture / ScreenCaptureKit / ffmpeg, while your actual screen stays untouched. A single-file Swift CLI, no GUI.',
+      vi: 'Tạo CGVirtualDisplay thật — macOS xem nó như một màn hình vật lý để kéo cửa sổ sang và quay bằng screencapture / ScreenCaptureKit / ffmpeg, trong khi màn hình thật của bạn không bị đụng vào. Một CLI Swift gọn trong một file, không GUI.',
+    },
+    features: {
+      en: [
+        'One command → extra 1920×1080 display (custom size supported)',
+        'Record it cleanly: screencapture -D2, ScreenCaptureKit, ffmpeg',
+        'Perfect for demo videos — main session stays private',
+        'Display disappears when the process exits (Ctrl-C)',
+        'Single-file Swift source — no dependencies, no GUI',
+      ],
+      vi: [
+        'Một lệnh → thêm display 1920×1080 (hỗ trợ tuỳ chỉnh kích thước)',
+        'Quay sạch: screencapture -D2, ScreenCaptureKit, ffmpeg',
+        'Lý tưởng cho video demo — màn hình chính giữ nguyên riêng tư',
+        'Display biến mất khi process thoát (Ctrl-C)',
+        'Source Swift một file duy nhất — không dependencies, không GUI',
+      ],
+    },
+    permission: { en: 'None', vi: 'Không cần' },
+  },
 ];
 
 export const t = {

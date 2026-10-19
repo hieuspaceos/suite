@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import AppPage from '../../components/AppPage.astro';
+import { apps, t } from '../../data/apps.js';
+const app = apps.find((a) => a.id === 'clipspot');
+const T = t.en;
+---
+<Base title={app.name + ' — Suite'} desc={app.tagline.en} lang="en" i18n={T}>
+  <AppPage app={app} t={T} lang="en" />
+</Base>
