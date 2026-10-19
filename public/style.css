@@ -174,3 +174,13 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 .lang-menu.open .lang-drop { display: flex; }
 .lang-drop a { display: block; padding: 8px 12px; border-radius: 6px; font-size: 13px; white-space: nowrap; color: var(--fg); }
 .lang-drop a:hover { background: var(--surface); color: var(--fg); }
+
+/* apps filter bar */
+.apps-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 26px; }
+.apps-search { flex: 1; min-width: 180px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg2); color: var(--fg); font: inherit; font-size: 14px; }
+.apps-search::placeholder { color: var(--muted); }
+.apps-search:focus { outline: none; border-color: var(--accent); }
+.apps-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 13px; transition: all .15s; }
+.chip:hover { color: var(--fg); border-color: var(--muted); }
+.chip.active { background: var(--accent); border-color: var(--accent); color: #0B1630; font-weight: 600; }

@@ -25,9 +25,19 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
 <section id="apps" class="apps container">
   <h2 class="section-title">{t.apps_title}</h2>
   <p class="section-sub">{t.apps_sub}</p>
-  <div class="apps-grid">
+  <div class="apps-bar">
+    <input class="apps-search" type="search" placeholder={t.search_ph} aria-label={t.search_ph}>
+    <div class="apps-chips">
+      <button class="chip active" data-cat="all">{t.cat_all}</button>
+      <button class="chip" data-cat="media">{t.cat_media}</button>
+      <button class="chip" data-cat="window">{t.cat_window}</button>
+      <button class="chip" data-cat="productivity">{t.cat_productivity}</button>
+      <button class="chip" data-cat="system">{t.cat_system}</button>
+    </div>
+  </div>
+  <div class="apps-grid" id="appsGrid">
     {apps.map((a) => (
-      <article class="app-tile">
+      <article class="app-tile" data-cat={a.cat} data-search={`${a.name} ${a.replaces.en} ${a.tagline[lang] ?? a.tagline.en} ${a.tagline.en}`.toLowerCase()}>
         <a class="app-tile-media" href={appHref(a.id)}>
           <img src={a.hero} alt={`${a.name} screenshot`} loading="lazy">
         </a>
@@ -45,7 +55,7 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
         </div>
       </article>
     ))}
-    <article class="app-tile app-tile--soon">
+    <article class="app-tile app-tile--soon" data-cat="__soon">
       <div class="app-tile-body">
         <div>
           <h3 class="dim">{t.soon_title}</h3>
@@ -67,3 +77,29 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
     </ol>
   </div>
 </section>
+
+<script is:inline>
+  (() => {
+    const grid = document.getElementById('appsGrid');
+    if (!grid) return;
+    const input = document.querySelector('.apps-search');
+    const chips = [...document.querySelectorAll('.apps-chips .chip')];
+    const tiles = [...grid.querySelectorAll('.app-tile:not(.app-tile--soon)')];
+    let cat = 'all', q = '';
+    const apply = () => {
+      tiles.forEach(t => {
+        const okCat = cat === 'all' || t.dataset.cat === cat;
+        const okQ = !q || t.dataset.search.includes(q);
+        t.style.display = (okCat && okQ) ? '' : 'none';
+      });
+      document.querySelector('.app-tile--soon').style.display =
+        cat === 'all' && !q ? '' : 'none';
+    };
+    input?.addEventListener('input', () => { q = input.value.trim().toLowerCase(); apply(); });
+    chips.forEach(c => c.addEventListener('click', () => {
+      chips.forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      cat = c.dataset.cat; apply();
+    }));
+  })();
+</script>
