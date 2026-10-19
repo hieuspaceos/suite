@@ -24,10 +24,9 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
   </div>
 
   <div class="hero-shot">
-    <img src={app.hero} alt={`${app.name} in action`} loading="eager">
+    <video src={`/assets/${app.id}-demo.mp4`} poster={app.hero} controls muted playsinline preload="metadata"></video>
   </div>
 </section>
-
 <section class="container">
   <p class="app-desc">{app.desc[lang]}</p>
   <ul class="feat-list">
