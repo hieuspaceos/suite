@@ -146,10 +146,12 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 
 /* mobile polish */
 @media (max-width: 640px) {
-  .nav-inner { padding: 12px 14px; }
+  .nav-inner { padding: 10px 12px; gap: 8px; }
   .brand-sub { display: none; }
-  .nav-links { gap: 10px; font-size: 14px; }
-  .nav-links .donate { font-size: 13px; }
+  .nav-links { gap: 8px; font-size: 13px; white-space: nowrap; }
+  .nav-links .donate { font-size: 14px; padding: 4px 8px; }
+  .nav-links .donate .donate-txt { display: none; }
+  .nav-links a { white-space: nowrap; }
   .hero { padding: 56px 0 36px; }
   .hero h1 { font-size: 30px; }
   .lede { font-size: 16px; }
