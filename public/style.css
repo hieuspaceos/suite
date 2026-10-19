@@ -221,3 +221,7 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
   .kicker { font-size: 11px; letter-spacing: .12em; }
   .lang-menu { flex-shrink: 0; }
 }
+
+.install-brew { margin-top: 34px; padding: 22px 26px; border: 1px dashed var(--border); border-radius: 14px; background: rgba(255,255,255,.02); }
+.brew-or { color: var(--muted); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+.brew-block { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.9; color: var(--fg); background: #0C1225; border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; overflow-x: auto; }

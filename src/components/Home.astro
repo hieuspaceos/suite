@@ -106,6 +106,10 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
         </li>
       ))}
     </ol>
+    <div class="install-brew">
+      <p class="brew-or">{t.install_brew_or}</p>
+      <code class="brew-block">brew tap hieuspaceos/suite && brew trust hieuspaceos/suite<br>brew install --cask swiftshot clipspot swishlite flipswitch</code>
+    </div>
   </div>
 </section>
 
