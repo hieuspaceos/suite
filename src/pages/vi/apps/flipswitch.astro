@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AppPage from '../../../components/AppPage.astro';
+import { apps, t } from '../../../data/apps.js';
+const app = apps.find((a) => a.id === 'flipswitch');
+const T = t.vi;
+---
+<Base title={app.name + ' — Suite'} desc={app.tagline.vi} lang="vi" i18n={T}>
+  <AppPage app={app} t={T} lang="vi" />
+</Base>

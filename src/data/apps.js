@@ -104,6 +104,41 @@ export const apps = [
     },
     permission: { en: 'Accessibility (paste-back)', vi: 'Accessibility (dán lại)' },
   },
+  {
+    id: 'flipswitch',
+    name: 'flipswitch',
+    icon: '/assets/flipswitch.png',
+    hero: '/assets/flipswitch-hero.jpg',
+    repo: 'https://github.com/hieuspaceos/flipswitch',
+    version: '1.0.0',
+    size: '0.4 MB',
+    replaces: { en: 'One Switch', vi: 'One Switch' },
+    tagline: {
+      en: 'Every system toggle, one menubar icon',
+      vi: 'Mọi toggle hệ thống, một icon menubar',
+    },
+    desc: {
+      en: 'Control-Center-style tile grid — dark mode, hide desktop/dock, mic & speaker mute, Wi-Fi, Bluetooth, keep-awake, low power, lock, sleep, trash, clear clipboard. Probes states async; tiles flip with a real 180° spin.',
+      vi: 'Lưới tile kiểu Control Center — dark mode, ẩn desktop/dock, mute mic & loa, Wi-Fi, Bluetooth, keep-awake, low power, lock, sleep, trash, clear clipboard. State probe async; tile lật 180° khi bấm.',
+    },
+    features: {
+      en: [
+        '15 toggles across system / focus / media / power',
+        'States probed off-main — panel opens instantly',
+        'Tiles hidden when dependency absent (blueutil, Shortcuts)',
+        'Optimistic flip + 180° icon spin, real system effect',
+        'Search filters live; ⌘Q quit; transient popover',
+      ],
+      vi: [
+        '15 toggle chia system / focus / media / power',
+        'Probe state chạy background — panel mở tức thì',
+        'Tile tự ẩn khi thiếu dependency (blueutil, Shortcuts)',
+        'Flip optimistic + icon xoay 180°, hiệu ứng hệ thống thật',
+        'Search lọc live; ⌘Q thoát; popover tự đóng',
+      ],
+    },
+    permission: { en: 'None (Accessibility for some toggles)', vi: 'Không cần (Accessibility cho vài toggle)' },
+  },
 ];
 
 export const t = {
