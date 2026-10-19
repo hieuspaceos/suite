@@ -70,7 +70,7 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 /* SECTIONS */
 .section-title { font-size: clamp(26px, 4vw, 36px); font-weight: 800; letter-spacing: -.02em; margin-bottom: 8px; }
 .section-sub { color: var(--muted); margin-bottom: 34px; }
-.apps { padding: 90px 0 80px; }
+.apps { padding-top: 90px; padding-bottom: 80px; }
 .apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
 
 /* APP CARD (home) */
@@ -91,7 +91,7 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 .app-tile--soon .dim { color: var(--muted); font-weight: 500; }
 
 /* INSTALL */
-.install { padding: 80px 0 90px; background: var(--bg2); border-top: 1px solid var(--border); }
+.install { padding-top: 80px; padding-bottom: 90px; background: var(--bg2); border-top: 1px solid var(--border); }
 .steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
 .steps li { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
 .step-n { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(100deg, var(--accent), #FF8E70); color: #1A0B08; font-weight: 800; display: grid; place-items: center; margin-bottom: 14px; }
