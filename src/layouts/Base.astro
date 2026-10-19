@@ -28,16 +28,16 @@ const t = i18n;
       <a href={lang === 'en' ? '/#install' : `/${lang}/#install`}>{i18n.install_nav}</a>
       <a href="https://github.com/hieuspaceos" target="_blank" rel="noopener">GitHub</a>
       <a class="donate" href="https://github.com/sponsors/hieuspaceos" target="_blank" rel="noopener">♥<span class="donate-txt"> Sponsor</span></a>
-      <details class="lang-menu">
-        <summary><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></summary>
-        <div class="lang-drop">
+      <div class="lang-menu">
+        <button class="lang-btn" type="button" aria-label="Language" aria-haspopup="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></button>
+        <div class="lang-drop" role="menu">
           <a href="/">English</a>
           <a href="/vi/">Tiếng Việt</a>
           <a href="/ja/">日本語</a>
           <a href="/ko/">한국어</a>
           <a href="/zh/">中文</a>
         </div>
-      </details>
+      </div>
     </nav>
   </div>
 </header>
@@ -53,11 +53,13 @@ const t = i18n;
 </footer>
 
 <script>
-  document.addEventListener('click', (e) => {
-    document.querySelectorAll('details.lang-menu[open]').forEach((d) => {
-      if (!d.contains(e.target)) d.removeAttribute('open');
-    });
-  });
+  const lm = document.querySelector('.lang-menu');
+  if (lm) {
+    const btn = lm.querySelector('.lang-btn');
+    btn.addEventListener('click', (e) => { e.stopPropagation(); lm.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if (!lm.contains(e.target)) lm.classList.remove('open'); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lm.classList.remove('open'); });
+  }
 </script>
 
 </body>
