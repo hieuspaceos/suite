@@ -1,7 +1,7 @@
 ---
 import { apps } from '../data/apps.js';
 const { t, lang } = Astro.props;
-const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
+const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
 ---
 
 <section class="hero">
@@ -34,13 +34,13 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
         <div class="app-tile-body">
           <img class="app-tile-icon" src={a.icon} alt={`${a.name} icon`} width="56" height="56">
           <div>
-            <p class="replaces">{t.replaces} {a.replaces[lang]}</p>
+            <p class="replaces">{t.replaces} {a.replaces[lang] ?? a.replaces.en}</p>
             <h3><a href={appHref(a.id)}>{a.name}</a></h3>
-            <p class="tagline">{a.tagline[lang]}</p>
+            <p class="tagline">{a.tagline[lang] ?? a.tagline.en}</p>
           </div>
         </div>
         <div class="tile-cta">
-          <a class="btn btn-ghost" href={appHref(a.id)}>{lang === 'vi' ? 'Xem chi tiết →' : 'Learn more →'}</a>
+          <a class="btn btn-ghost" href={appHref(a.id)}>{t.learn_more}</a>
           <a class="btn btn-primary" href={`${a.repo}/releases/latest`} target="_blank" rel="noopener">{t.download}</a>
         </div>
       </article>

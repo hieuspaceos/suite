@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { t } from '../../data/apps.js';
+const T = t.ja;
+---
+<Base title="Suite — オープンソースmacOSアプリ" desc={T.lede} lang="ja" i18n={T}>
+  <Home t={T} lang="ja" />
+</Base>

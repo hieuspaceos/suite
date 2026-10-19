@@ -162,3 +162,11 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
   .hero-shot { margin: 24px auto 0; border-radius: 10px; }
   .footer-inner { padding: 20px 0; font-size: 13px; }
 }
+
+/* language dropdown */
+.lang-menu { position: relative; display: inline-block; }
+.lang-menu summary { list-style: none; cursor: pointer; border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; display: inline-flex; align-items: center; color: var(--fg); }
+.lang-menu summary::-webkit-details-marker { display: none; }
+.lang-drop { position: absolute; right: 0; top: calc(100% + 6px); background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 6px; display: flex; flex-direction: column; min-width: 130px; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+.lang-drop a { padding: 7px 12px; border-radius: 6px; font-size: 13px; white-space: nowrap; }
+.lang-drop a:hover { background: var(--surface); }

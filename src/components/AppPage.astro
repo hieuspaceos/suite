@@ -2,25 +2,25 @@
 import { apps } from '../data/apps.js';
 const { app, t, lang } = Astro.props;
 const others = apps.filter((a) => a.id !== app.id);
-const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
+const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
 ---
 
 <section class="app-hero container">
   <img class="big-icon" src={app.icon} alt={`${app.name} icon`} width="108" height="108">
-  <p class="replaces">{t.replaces} {app.replaces[lang]}</p>
+  <p class="replaces">{t.replaces} {app.replaces[lang] ?? app.replaces.en}</p>
   <h1>{app.name}</h1>
-  <p class="tagline">{app.tagline[lang]}</p>
+  <p class="tagline">{app.tagline[lang] ?? app.tagline.en}</p>
   <div class="hero-cta">
     <a class="btn btn-primary" href={`${app.repo}/releases/latest`} target="_blank" rel="noopener">{t.download}</a>
     <a class="btn btn-ghost" href={app.repo} target="_blank" rel="noopener">{t.view_src}</a>
   </div>
 
   <div class="meta-row">
-    <div class="meta-item"><span>{t.meta_platform === 'Mac' ? (lang==='vi'?'Nền tảng':'Platform') : 'Platform'}</span><b>Mac</b></div>
+    <div class="meta-item"><span>{t.meta_platform === 'Mac' ? t.meta_platform_lbl : t.meta_platform}</span><b>Mac</b></div>
     <div class="meta-item"><span>{t.meta_version}</span><b>{app.version}</b></div>
     <div class="meta-item"><span>macOS</span><b>14+</b></div>
     <div class="meta-item"><span>{t.meta_size}</span><b>{app.size}</b></div>
-    <div class="meta-item"><span>{lang === 'vi' ? 'Quyền' : 'Permission'}</span><b>{app.permission[lang]}</b></div>
+    <div class="meta-item"><span>{t.meta_perm_lbl}</span><b>{app.permission[lang] ?? app.permission.en}</b></div>
   </div>
 
   <div class="hero-shot">
@@ -28,9 +28,9 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
   </div>
 </section>
 <section class="container">
-  <p class="app-desc">{app.desc[lang]}</p>
+  <p class="app-desc">{app.desc[lang] ?? app.desc.en}</p>
   <div class="feature-grid">
-    {app.features[lang].map((f, i) => (
+    {(app.features[lang] ?? app.features.en).map((f, i) => (
       <div class="feature-block">
         <div class="fi">{['⌘','✎','⧉','⛶','⚙'][i % 5]}</div>
         <b>{f.split('·')[0].split('—')[0].trim()}</b>
@@ -38,7 +38,7 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
       </div>
     ))}
   </div>
-  <p class="perm">{t.perm_note} <b>{app.permission[lang]}</b> — {lang === 'vi'
+  <p class="perm">{t.perm_note} <b>{app.permission[lang] ?? app.permission.en}</b> — {lang === 'vi'
     ? 'macOS sẽ hỏi khi mở lần đầu; cấp trong System Settings → Privacy & Security.'
     : 'macOS will ask on first launch; grant under System Settings → Privacy & Security.'}</p>
 </section>
@@ -50,7 +50,7 @@ const appHref = (id) => `${lang === 'vi' ? '/vi' : ''}/apps/${id}`;
       {others.map((o) => (
         <a class="more-tile" href={appHref(o.id)}>
           <img src={o.icon} alt={`${o.name} icon`}>
-          <div><b>{o.name}</b><small>{o.tagline[lang]}</small></div>
+          <div><b>{o.name}</b><small>{o.tagline[lang] ?? o.tagline.en}</small></div>
         </a>
       ))}
       <a class="more-tile" href="https://github.com/hieuspaceos" target="_blank" rel="noopener">

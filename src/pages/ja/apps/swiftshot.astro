@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AppPage from '../../../components/AppPage.astro';
+import { apps, t } from '../../../data/apps.js';
+const app = apps.find((a) => a.id === 'swiftshot');
+const T = t.ja;
+---
+<Base title={app.name + ' — Suite'} desc={app.tagline.ja} lang="ja" i18n={T}>
+  <AppPage app={app} t={T} lang="ja" />
+</Base>

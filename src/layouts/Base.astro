@@ -21,15 +21,24 @@ const t = i18n;
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="brand" href={lang === 'vi' ? '/vi/' : '/'}>
+    <a class="brand" href={lang === 'en' ? '/' : `/${lang}/`}>
       <span class="brand-mark">◆</span> Apps
     </a>
     <nav class="nav-links">
-      <a href={lang === 'vi' ? '/vi/#apps' : '/#apps'}>{lang === 'vi' ? 'Apps' : 'Apps'}</a>
-      <a href={lang === 'vi' ? '/vi/#install' : '/#install'}>{lang === 'vi' ? 'Cài đặt' : 'Install'}</a>
+      <a href={lang === 'en' ? '/#apps' : `/${lang}/#apps`}>{i18n.apps_title}</a>
+      <a href={lang === 'en' ? '/#install' : `/${lang}/#install`}>{i18n.install_nav}</a>
       <a href="https://github.com/hieuspaceos" target="_blank" rel="noopener">GitHub</a>
       <a class="donate" href="https://github.com/sponsors/hieuspaceos" target="_blank" rel="noopener">♥ Sponsor</a>
-      <a class="lang-switch" href={t.lang_href} aria-label={t.lang_link} title={t.lang_link}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></a>
+      <details class="lang-menu">
+        <summary><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></summary>
+        <div class="lang-drop">
+          <a href="/">English</a>
+          <a href="/vi/">Tiếng Việt</a>
+          <a href="/ja/">日本語</a>
+          <a href="/ko/">한국어</a>
+          <a href="/zh/">中文</a>
+        </div>
+      </details>
     </nav>
   </div>
 </header>
