@@ -20,6 +20,7 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
     <div class="meta-item"><span>{t.meta_version}</span><b>{app.version}</b></div>
     <div class="meta-item"><span>macOS</span><b>14+</b></div>
     <div class="meta-item"><span>{t.meta_size}</span><b>{app.size}</b></div>
+    <div class="meta-item"><span>RAM</span><b>{app.ram}</b></div>
     <div class="meta-item"><span>{t.meta_perm_lbl}</span><b>{app.permission[lang] ?? app.permission.en}</b></div>
   </div>
 
