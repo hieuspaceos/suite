@@ -139,3 +139,26 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
   .hero { padding: 64px 0 44px; }
   .meta-item { padding: 12px 18px; }
 }
+
+
+/* sponsor link in nav */
+.nav-links .donate { color: var(--accent); font-weight: 600; }
+
+/* mobile polish */
+@media (max-width: 640px) {
+  .nav-inner { padding: 12px 14px; }
+  .brand-sub { display: none; }
+  .nav-links { gap: 10px; font-size: 14px; }
+  .nav-links .donate { font-size: 13px; }
+  .hero { padding: 56px 0 36px; }
+  .hero h1 { font-size: 30px; }
+  .lede { font-size: 16px; }
+  .container { padding: 0 16px; }
+  .feature-grid { grid-template-columns: 1fr; gap: 10px; }
+  .meta-row { flex-direction: column; }
+  .app-hero { padding: 40px 0 24px; }
+  .app-hero .big-icon { width: 64px; height: 64px; border-radius: 16px; }
+  .app-hero h1 { font-size: 28px; }
+  .hero-shot { margin: 24px auto 0; border-radius: 10px; }
+  .footer-inner { padding: 20px 0; font-size: 13px; }
+}
