@@ -104,41 +104,6 @@ export const apps = [
     },
     permission: { en: 'Accessibility (paste-back)', vi: 'Accessibility (dán lại)' },
   },
-  {
-    id: 'vdisplay',
-    name: 'vdisplay',
-    icon: '/assets/vdisplay.png',
-    hero: '/assets/vdisplay-hero.jpg',
-    repo: 'https://github.com/hieuspaceos/vdisplay',
-    version: '0.1',
-    size: '0.05 MB',
-    replaces: { en: 'BetterDisplay (dummy displays)', vi: 'BetterDisplay (dummy displays)' },
-    tagline: {
-      en: 'A free virtual display in one tiny binary',
-      vi: 'Một màn hình ảo miễn phí trong một binary nhỏ gọn',
-    },
-    desc: {
-      en: 'Creates a real CGVirtualDisplay — macOS treats it as a physical monitor you can move windows onto and record with screencapture / ScreenCaptureKit / ffmpeg, while your actual screen stays untouched. A single-file Swift CLI, no GUI.',
-      vi: 'Tạo CGVirtualDisplay thật — macOS xem nó như một màn hình vật lý để kéo cửa sổ sang và quay bằng screencapture / ScreenCaptureKit / ffmpeg, trong khi màn hình thật của bạn không bị đụng vào. Một CLI Swift gọn trong một file, không GUI.',
-    },
-    features: {
-      en: [
-        'One command → extra 1920×1080 display (custom size supported)',
-        'Record it cleanly: screencapture -D2, ScreenCaptureKit, ffmpeg',
-        'Perfect for demo videos — main session stays private',
-        'Display disappears when the process exits (Ctrl-C)',
-        'Single-file Swift source — no dependencies, no GUI',
-      ],
-      vi: [
-        'Một lệnh → thêm display 1920×1080 (hỗ trợ tuỳ chỉnh kích thước)',
-        'Quay sạch: screencapture -D2, ScreenCaptureKit, ffmpeg',
-        'Lý tưởng cho video demo — màn hình chính giữ nguyên riêng tư',
-        'Display biến mất khi process thoát (Ctrl-C)',
-        'Source Swift một file duy nhất — không dependencies, không GUI',
-      ],
-    },
-    permission: { en: 'None', vi: 'Không cần' },
-  },
 ];
 
 export const t = {
