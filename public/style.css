@@ -168,12 +168,18 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 
 /* language dropdown — JS toggle */
 .lang-menu { position: relative; display: inline-block; }
-.lang-btn { cursor: pointer; border: 1px solid var(--border); border-radius: 999px; padding: 5px 10px; display: inline-flex; align-items: center; color: var(--fg); background: transparent; font: inherit; }
+.lang-btn { cursor: pointer; border: 1px solid var(--border); border-radius: 999px; padding: 5px 10px; display: inline-flex; align-items: center; color: var(--fg); background: transparent; font: inherit; -webkit-appearance: none; appearance: none; }
 .lang-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .lang-drop { display: none; position: absolute; right: 0; top: calc(100% + 8px); background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 6px; flex-direction: column; gap: 2px; min-width: 140px; z-index: 100; box-shadow: 0 12px 32px rgba(0,0,0,.55); }
 .lang-menu.open .lang-drop { display: flex; }
 .lang-drop a { display: block; padding: 8px 12px; border-radius: 6px; font-size: 13px; white-space: nowrap; color: var(--fg); }
 .lang-drop a:hover { background: var(--surface); color: var(--fg); }
+@media (max-width: 640px) {
+  .lang-menu { flex-shrink: 0; }
+  .lang-btn { padding: 6px 9px; }
+  .lang-drop { position: fixed; top: 56px; right: 10px; min-width: 160px; }
+  .lang-drop a { padding: 10px 14px; font-size: 14px; }
+}
 
 /* apps filter bar */
 .apps-bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 28px; }
