@@ -72,7 +72,7 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
     <ol class="steps">
       {t.steps.map((s, i) => (
         <li class={i === 2 ? 'step-card--art' : ''}>
-          <span class="step-n">{i + 1}</span><b>{s[0]}</b><span class="txt">{s[1]}</span>
+          <span class="step-n">{i + 1}</span><div class="txt-wrap"><b>{s[0]}</b><span class="txt">{s[1]}</span></div>
           {i === 2 && <svg class="step-art" viewBox="0 0 240 132" fill="none" aria-hidden="true">
             <!-- Finder window -->
             <rect x="8" y="10" width="150" height="112" rx="8" fill="#152248" stroke="#2A3B6B"/>

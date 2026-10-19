@@ -188,7 +188,12 @@ code { background: var(--surface); padding: 2px 8px; border-radius: 6px; font-si
 .chip:hover { color: var(--fg); border-color: var(--muted); background: rgba(255,255,255,.07); }
 .chip.active { background: var(--accent); border-color: var(--accent); color: #0B1630; font-weight: 600; box-shadow: 0 4px 14px rgba(255,122,89,.3); }
 
-.step-card--art { grid-column: 1 / -1; }
-.step-art { width: 100%; max-width: 340px; margin-top: 14px; border-radius: 8px; }
+.step-card--art { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; grid-column: span 2; }
+.step-card--art > .step-n { flex: 0 0 auto; }
+.step-card--art > div.txt-wrap { flex: 1; min-width: 220px; }
+.step-card--art .step-art { flex: 0 0 260px; margin-top: 4px; }
+.step-card--art .step-alt { flex-basis: 100%; margin-top: 0; }
+.step-art { border-radius: 8px; }
 .step-alt { margin-top: 10px; font-size: 12.5px; color: var(--muted); }
 .step-alt code { color: var(--fg); }
+@media (max-width: 640px) { .step-card--art { grid-column: 1 / -1; } .step-card--art .step-art { flex-basis: 100%; max-width: 280px; } }
