@@ -2,8 +2,8 @@ export const apps = [
   {
     id: 'swiftshot',
     ram: '~12 MB',
-    ram_use: '~150 MB',
-    rival: { name: 'CleanShot X', size: '~150 MB', ram: '~99 MB', price: '$29 one-time + $8/mo cloud' },
+    ram_use: '~158 MB',
+    rival: { name: 'CleanShot X', size: '~150 MB', ram: '~96 MB', price: '$29 one-time + $8/mo cloud' },
     cat: 'media',
     name: 'SwiftShot',
     icon: '/assets/swiftshot.png',
@@ -46,7 +46,7 @@ export const apps = [
   },
   {
     id: 'swishlite',
-    ram: '~12 MB',
+    ram: '~20 MB',
     ram_use: '~20 MB',
     rival: { name: 'Swish', size: '~12 MB', ram: '~41 MB', price: '$14' },
     cat: 'window',
@@ -91,8 +91,8 @@ export const apps = [
   },
   {
     id: 'clipspot',
-    ram: '~22 MB',
-    ram_use: '~60 MB',
+    ram: '~52 MB',
+    ram_use: '~52 MB',
     rival: { name: 'Paste', size: '~60 MB', ram: '~34 MB', price: '$14.99/yr subscription' },
     cat: 'productivity',
     name: 'ClipSpot',
@@ -136,8 +136,8 @@ export const apps = [
   },
   {
     id: 'flipswitch',
-    ram: '~13 MB',
-    ram_use: '~35 MB',
+    ram: '~10 MB',
+    ram_use: '~10 MB',
     rival: { name: 'One Switch', size: '~20 MB', ram: '~20 MB', price: '$4.99' },
     cat: 'system',
     name: 'flipswitch',
