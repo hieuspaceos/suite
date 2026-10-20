@@ -54,8 +54,8 @@ export const apps = [
     icon: '/assets/swishlite.png',
     hero: '/assets/swishlite-hero.jpg',
     repo: 'https://github.com/hieuspaceos/swishlite',
-    version: 'v1.0.1',
-    size: '294 KB',
+    version: 'v1.0.5',
+    size: '450 KB',
     replaces: { en: 'Swish', vi: 'Swish' , ja: 'Swish', ko: 'Swish', zh: 'Swish' },
     tagline: {
       en: 'Trackpad gestures for window management',
