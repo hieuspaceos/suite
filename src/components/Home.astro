@@ -74,35 +74,8 @@ const appHref = (id) => `${lang === 'en' ? '' : '/' + lang}/apps/${id}`;
     <p class="section-sub">{t.install_sub}</p>
     <ol class="steps">
       {t.steps.map((s, i) => (
-        <li class={i === 2 ? 'step-card--art' : ''}>
+        <li>
           <span class="step-n">{i + 1}</span><div class="txt-wrap"><b>{s[0]}</b><span class="txt">{s[1]}</span></div>
-          {i === 2 && <svg class="step-art" viewBox="0 0 240 132" fill="none" aria-hidden="true">
-            <!-- Finder window -->
-            <rect x="8" y="10" width="150" height="112" rx="8" fill="#152248" stroke="#2A3B6B"/>
-            <rect x="8" y="10" width="150" height="20" rx="8" fill="#1A2A55"/>
-            <circle cx="18" cy="20" r="3.2" fill="#FF5F57"/><circle cx="30" cy="20" r="3.2" fill="#FEBC2E"/><circle cx="42" cy="20" r="3.2" fill="#28C840"/>
-            <!-- app icon -->
-            <rect x="26" y="48" width="34" height="34" rx="8" fill="#FF7A59"/>
-            <circle cx="43" cy="65" r="6" fill="#1A0B08"/>
-            <text x="26" y="98" font-size="8" fill="#C7D0EA">App.app</text>
-            <!-- right-click menu -->
-            <rect x="64" y="44" width="84" height="58" rx="6" fill="#24345E" stroke="#2A3B6B"/>
-            <rect x="70" y="50" width="72" height="9" rx="2.5" fill="#FF7A59"/>
-            <rect x="70" y="64" width="52" height="7" rx="2" fill="#33467E"/>
-            <rect x="70" y="77" width="60" height="7" rx="2" fill="#33467E"/>
-            <rect x="70" y="90" width="44" height="7" rx="2" fill="#33467E"/>
-            <text x="74" y="57" font-size="6.5" font-weight="700" fill="#1A0B08">Open</text>
-            <!-- cursor -->
-            <path d="M132 106l14 14-7 3-3 8-4-2 3-8-8-4z" fill="#fff" stroke="#0B1630"/>
-            <!-- dialog -->
-            <rect x="166" y="34" width="66" height="62" rx="7" fill="#24345E" stroke="#2A3B6B"/>
-            <circle cx="199" cy="50" r="8" fill="#FF7A59"/><text x="199" y="53.5" font-size="8" font-weight="800" text-anchor="middle" fill="#1A0B08">!</text>
-            <rect x="174" y="64" width="50" height="5" rx="2" fill="#33467E"/>
-            <rect x="174" y="73" width="38" height="5" rx="2" fill="#33467E"/>
-            <rect x="188" y="84" width="36" height="8" rx="4" fill="#FF7A59"/>
-            <text x="206" y="90" font-size="6" font-weight="700" text-anchor="middle" fill="#1A0B08">Open</text>
-          </svg>}
-          {i === 2 && <p class="step-alt" set:html={t.gate_alt}></p>}
         </li>
       ))}
     </ol>

@@ -35,10 +35,10 @@ Every app page carries a full rendered feature demo:
 
 Zip → `/Applications` → open → grant permission. No Xcode needed.
 
-1. Download the `.zip` from the app's GitHub **Releases**.
-2. Drag the `.app` into `/Applications`.
-3. Right-click → **Open** once if Gatekeeper asks.
-4. Grant the permission the app requests (Screen Recording / Accessibility).
+1. Download the `.dmg`/`.zip` from the app's GitHub **Releases**.
+2. Drag the `.app` into `/Applications` — releases are Developer ID
+   signed + notarized, no Gatekeeper warning.
+3. Grant the permission the app requests (Screen Recording / Accessibility).
 
 ## This site
 
