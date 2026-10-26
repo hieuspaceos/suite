@@ -2,12 +2,12 @@
 import Base from '../../../layouts/Base.astro';
 import { t as i18n } from '../../../data/apps.js';
 import { projects } from '../../../data/projects.js';
-const lang = 'ja';
+const lang = 'ko';
 const t = i18n[lang];
-const p = projects.find(x => x.id === 'pressrs');
+const p = projects.find(x => x.id === 'rpress');
 ---
 
-<Base lang={lang} i18n={t} title="pressrs — WordPress-parity CMS in one Rust binary">
+<Base lang={lang} i18n={t} title="RPress — WordPress-parity CMS in one Rust binary">
 
 <style>
 .pr-hero{position:relative;padding:96px 0 72px;text-align:center;overflow:hidden}
@@ -83,12 +83,12 @@ const p = projects.find(x => x.id === 'pressrs');
   <div class="container">
     <span class="pr-kicker"><b>◆</b> Open source · Rust · MIT</span>
     <h1>WordPress,<br><span class="grad">without WordPress.</span></h1>
-    <p class="lede">pressrs reproduces wp-admin pixel-for-workflow and serves the site as <b>static files</b>.
+    <p class="lede">RPress reproduces wp-admin pixel-for-workflow and serves the site as <b>static files</b>.
     One 14 MB binary replaces PHP + MySQL + plugins. Import a WP dump, keep your editors' habits,
     lose the attack surface.</p>
     <div class="pr-cta">
       <a class="pr-btn pr-btn--primary" href={p.repo} target="_blank" rel="noopener">★ Star on GitHub</a>
-      <a class="pr-btn pr-btn--ghost" href="#migrate">pressrs migrate dump.sql ↓</a>
+      <a class="pr-btn pr-btn--ghost" href="#migrate">RPress migrate dump.sql ↓</a>
     </div>
     <div class="pr-meta">
       <div class="m"><span>Binary</span><b>14 MB</b></div>
@@ -101,11 +101,11 @@ const p = projects.find(x => x.id === 'pressrs');
     <div class="pr-term">
       <div class="pr-term-bar"><i></i><i></i><i></i></div>
       <pre><span class="c"># one command: WP dump → imported site + admin user + rendered cache</span>
-<span class="g">$</span> pressrs <span class="o">migrate</span> dump.sql --site-url https://example.com
-  → imported  <span class="p">1,240 posts</span>, 68 pages, 3 menus, 421 media
+<span class="g">$</span> rpress <span class="o">migrate</span> dump.sql --site-url https://example.com
+  → imported  <span class="p">951 posts</span>, 49 pages, 3 menus, 9,622 media
   → admin user <span class="p">admin@example.com</span> · password <span class="p">••••••••••••</span> (printed once)
-  → rendered <span class="p">1,308 pages</span> → cache/
-<span class="g">$</span> pressrs serve --bind 127.0.0.1:8000 --db site.db
+  → rendered <span class="p">1,239 pages</span> → cache/
+<span class="g">$</span> rpress serve --bind 127.0.0.1:8000 --db site.db
   → <span class="p">listening</span> · admin at /admin</pre>
     </div>
   </div>
@@ -125,7 +125,7 @@ const p = projects.find(x => x.id === 'pressrs');
 
 <section class="pr-sec">
   <div class="container">
-    <h2>Why pressrs wins — the numbers</h2>
+    <h2>Why RPress wins — the numbers</h2>
     <p class="sub">Not vibes. Every advantage below is structural, so it holds at any traffic level.</p>
     <div class="pr-grid">
       <div class="pr-card"><span class="n">Request cost</span><b>µs, not ms</b><p>Serve = <code>fs::read</code> of a file already in the OS page cache. No query, no template, no PHP boot — the same reason nginx static hosting is fast, except the cache is native.</p></div>
@@ -143,7 +143,7 @@ const p = projects.find(x => x.id === 'pressrs');
     <h2>What it is</h2>
     <p class="sub">A structural conversion of WordPress — same admin screens, static output.</p>
     <div class="pr-callout" style="margin-top:0">
-      pressrs reproduces wp-admin one-for-one — posts, pages, media, comments, users, menus, widgets,
+      RPress reproduces wp-admin one-for-one — posts, pages, media, comments, users, menus, widgets,
       revisions, quick edit, bulk actions — but the public site is <b>pre-rendered HTML read from disk</b>.
       The CMS does the WordPress work <b>once at publish time</b> and then gets out of the way.
       No PHP, no per-request render, no plugin runtime.
@@ -161,10 +161,10 @@ const p = projects.find(x => x.id === 'pressrs');
 
 <section class="pr-sec">
   <div class="container">
-    <h2>pressrs vs WordPress vs Next.js</h2>
+    <h2>RPress vs WordPress vs Next.js</h2>
     <p class="sub">Same outcome — a site. Different operating cost, attack surface, and admin experience.</p>
     <div class="pr-tbl pr-tbl--4">
-      <div class="r"><span></span><span class="ours">pressrs</span><span>WordPress</span><span>Next.js + headless CMS</span></div>
+      <div class="r"><span></span><span class="ours">RPress</span><span>WordPress</span><span>Next.js + headless CMS</span></div>
       <div class="r"><span>Public request</span><span class="ours">fs::read cached file</span><span class="bad">PHP boot + 50–200 queries</span><span class="bad">Static file or SSR per page</span></div>
       <div class="r"><span>Pieces</span><span class="ours">1 binary + 1 .db</span><span class="bad">PHP-FPM + MySQL + WP + plugins</span><span class="bad">Node + CMS + DB + build</span></div>
       <div class="r"><span>RAM</span><span class="ours">~30 MB</span><span class="bad">~500 MB+</span><span class="bad">Node + framework baseline</span></div>
@@ -178,7 +178,7 @@ const p = projects.find(x => x.id === 'pressrs');
       <div class="r"><span>Migration</span><span class="ours">One command — imports WP dump</span><span class="bad">—</span><span class="bad">Rebuild content model + theme</span></div>
       <div class="r"><span>Best for</span><span class="ours">Content sites, blog fleets, lean ops</span><span class="bad">Stores, forums, membership</span><span class="bad">Apps that are mostly dynamic</span></div>
     </div>
-    <div class="pr-callout">Content sites — posts, pages, galleries, comments, reviews — pressrs wins on every row that matters. Store/forum/membership → keep WordPress. Mostly-an-app → Next.js fits better.</div>
+    <div class="pr-callout">Content sites — posts, pages, galleries, comments, reviews — RPress wins on every row that matters. Store/forum/membership → keep WordPress. Mostly-an-app → Next.js fits better.</div>
   </div>
 </section>
 
@@ -232,7 +232,7 @@ const p = projects.find(x => x.id === 'pressrs');
   <text x="765" y="224" fill="var(--fg)" text-anchor="middle">redirects.map</text>
 </svg>
     </div>
-    <div class="pr-callout"><b>The cache is the site.</b> nginx can front <code>cache/</code> directly — pressrs is then only needed for admin and misses. Restarting or upgrading the binary never loses content: the DB is the source of truth, the cache rebuilds.</div>
+    <div class="pr-callout"><b>The cache is the site.</b> nginx can front <code>cache/</code> directly — RPress is then only needed for admin and misses. Restarting or upgrading the binary never loses content: the DB is the source of truth, the cache rebuilds.</div>
     <p class="sub" style="margin-top:36px">Layered source: SQL lives in <code>src/db/sql/*.sql</code> (compile-time <code>include_str!</code>), admin handlers call <code>db::</code> only, render owns the publish path. One process, no service mesh.</p>
   </div>
 </section>
@@ -246,8 +246,8 @@ const p = projects.find(x => x.id === 'pressrs');
   <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--muted)"/></marker></defs>
   <text x="20" y="24" fill="var(--muted)" font-size="11" letter-spacing="2">REQUEST → FIRST BYTE</text>
 
-  <!-- pressrs timeline -->
-  <text x="20" y="60" fill="#7ee787" font-weight="700">pressrs</text>
+  <!-- RPress timeline -->
+  <text x="20" y="60" fill="#7ee787" font-weight="700">RPress</text>
   <rect x="20" y="72" width="70" height="26" rx="6" fill="none" stroke="#7ee787"/>
   <text x="55" y="89" fill="var(--fg)" text-anchor="middle" font-size="10">route</text>
   <rect x="90" y="72" width="120" height="26" rx="6" fill="none" stroke="#7ee787"/>
@@ -286,7 +286,7 @@ const p = projects.find(x => x.id === 'pressrs');
       <div class="pr-card"><span class="n">CLS</span><b>0 by design</b><p>No runtime layout injection — content is final HTML at serve time. Fonts and images are the only variables left.</p></div>
       <div class="pr-card"><span class="n">Perceived nav</span><b>Instant on hover</b><p><code>nav.js</code> speculation-rules prefetch warms the next page before the click; swap replaces the content node — feels like an SPA, costs like a file read.</p></div>
     </div>
-    <div class="pr-callout"><b>The honest caveat:</b> LCP depends on your theme's CSS/JS weight as much as the server. pressrs removes the server-side ceiling — theme weight is the next bottleneck, and it's fully in your control.</div>
+    <div class="pr-callout"><b>The honest caveat:</b> LCP depends on your theme's CSS/JS weight as much as the server. RPress removes the server-side ceiling — theme weight is the next bottleneck, and it's fully in your control.</div>
   </div>
 </section>
 
@@ -295,12 +295,12 @@ const p = projects.find(x => x.id === 'pressrs');
     <h2>How small a VPS does it need</h2>
     <p class="sub">The whole point: it fits where WordPress can't.</p>
     <div class="pr-tbl">
-      <div class="r"><span>VPS</span><span class="ours">pressrs</span><span>WordPress</span></div>
+      <div class="r"><span>VPS</span><span class="ours">RPress</span><span>WordPress</span></div>
       <div class="r"><span>512 MB</span><span class="ours">Several sites, headroom left</span><span class="bad">MySQL alone wants ~400 MB</span></div>
       <div class="r"><span>1 GB</span><span class="ours">Dozens of sites behind nginx</span><span class="bad">Tight — PHP workers + MySQL</span></div>
       <div class="r"><span>2 GB</span><span class="ours">Effectively a blog fleet</span><span class="bad">Comfortable single site</span></div>
     </div>
-    <div class="pr-callout">pressrs idles at ~30 MB and only does real work on cache-miss renders — the OS page cache serves the rest. <b>$5/mo is not a constraint; it's overkill.</b></div>
+    <div class="pr-callout">RPress idles at ~30 MB and only does real work on cache-miss renders — the OS page cache serves the rest. <b>$5/mo is not a constraint; it's overkill.</b></div>
   </div>
 </section>
 
@@ -314,12 +314,12 @@ const p = projects.find(x => x.id === 'pressrs');
 <span class="g">$</span> cargo build --release
 
 <span class="c"># point at a WP SQL dump</span>
-<span class="g">$</span> ./target/release/pressrs migrate dump.sql \
+<span class="g">$</span> ./target/release/rpress migrate dump.sql \
       --db site.db --templates templates --out cache --www www \
       --site-url https://example.com
 
 <span class="c"># serve — admin at /admin</span>
-<span class="g">$</span> ./target/release/pressrs serve --site default --db site.db \
+<span class="g">$</span> ./target/release/rpress serve --site default --db site.db \
       --templates templates --out cache --www www --bind 127.0.0.1:8000</pre>
     </div>
     <div class="pr-callout">The cache then warms itself from traffic — <b>cold start is not required</b>. Steps also exist separately (<code>import parse</code>, <code>import verify</code>, <code>generate</code>, <code>user add</code>) for partial reruns.</div>
@@ -329,8 +329,8 @@ const p = projects.find(x => x.id === 'pressrs');
 <section class="pr-foot">
   <div class="container">
     <div class="big">WordPress-compatible.<br>WordPress-free.</div>
-    <a class="pr-btn pr-btn--primary" style="margin-top:26px" href={p.repo} target="_blank" rel="noopener">github.com/hieuspaceos/pressrs →</a>
-    <div><code>pressrs migrate dump.sql</code></div>
+    <a class="pr-btn pr-btn--primary" style="margin-top:26px" href={p.repo} target="_blank" rel="noopener">github.com/hieuspaceos/rpress →</a>
+    <div><code>rpress migrate dump.sql</code></div>
   </div>
 </section>
 </Base>

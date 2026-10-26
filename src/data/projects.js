@@ -1,9 +1,9 @@
 export const projects = [
   {
-    id: 'pressrs',
-    name: 'pressrs',
-    icon: '/assets/pressrs.png',
-    repo: 'https://github.com/hieuspaceos/pressrs',
+    id: 'rpress',
+    name: 'RPress',
+    icon: '/assets/rpress.png',
+    repo: 'https://github.com/hieuspaceos/rpress',
     lang: 'Rust',
     tagline: {
       en: 'WordPress-parity CMS in one Rust binary — static output, wp-admin inside',

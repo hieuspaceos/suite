@@ -1,0 +1,680 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t as i18n } from '../../data/apps.js';
+import { projects } from '../../data/projects.js';
+const lang = 'en';
+const t = i18n[lang];
+const p = projects.find(x => x.id === 'rpress');
+---
+
+<Base lang={lang} i18n={t} title="RPress — WordPress-parity CMS in one Rust binary">
+
+<style>
+.pr-hero{position:relative;padding:64px 0 56px;text-align:center;overflow:hidden;min-height:78vh;display:flex;align-items:center}
+.pr-hero .container{width:100%}
+.pr-hero::before{content:"";position:absolute;inset:-40% -10% auto;height:520px;
+  background:radial-gradient(closest-side,rgba(255,106,0,.16),transparent 70%);pointer-events:none}
+.pr-kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--border);
+  border-radius:999px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:var(--bg2)}
+.pr-kicker b{color:#ff6a00;font-weight:600}
+.pr-hero h1{font-size:clamp(48px,7vw,88px);font-weight:800;letter-spacing:-.045em;line-height:.95;margin:26px 0 14px;
+  background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,.55));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pr-hero .lede{max-width:640px;margin:0 auto;color:var(--muted);font-size:clamp(16px,1.8vw,19px);line-height:1.55}
+.pr-cta{display:flex;gap:12px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.pr-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+.pr-btn:hover{transform:translateY(-1px)}
+.pr-btn--primary{background:#ff6a00;color:#0b0b0f;box-shadow:0 10px 30px rgba(255,106,0,.25)}
+.pr-btn--ghost{border:1px solid var(--border);color:var(--fg);background:transparent}
+.pr-meta{display:flex;flex-wrap:wrap;gap:0;justify-content:center;margin-top:44px}
+.pr-meta .m{padding:12px 26px;border-right:1px solid var(--border);text-align:left}
+.pr-meta .m:last-child{border-right:0}
+.pr-meta .m span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pr-meta .m b{font-size:15px}
+
+.pr-term{max-width:760px;margin:56px auto 0;border:1px solid var(--border);border-radius:14px;background:#0d0f14;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:hidden;text-align:left}
+.pr-term-bar{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid var(--border)}
+.pr-term-bar i{width:10px;height:10px;border-radius:50%;background:#3a3f4a}
+.pr-term-bar i:nth-child(1){background:#ff5f57}.pr-term-bar i:nth-child(2){background:#febc2e}.pr-term-bar i:nth-child(3){background:#28c840}
+.pr-term pre{margin:0;padding:20px 22px;font-size:13px;line-height:1.7;color:#c9d1d9;overflow:auto}
+.pr-term .c{color:#6a737d}.pr-term .g{color:#7ee787}.pr-term .o{color:#ffa657}.pr-term .p{color:#79c0ff}
+
+.pr-sec{padding:56px 0;border-top:1px solid var(--border);overflow-x:clip}
+.pr-sec--who{border-top:0;padding-top:32px}
+.pr-sec h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;letter-spacing:-.03em;text-align:center;margin:0 0 12px}
+.pr-sec .sub{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 44px;font-size:16px}
+
+.pr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;max-width:1080px;margin:0 auto}
+.pr-card{border:1px solid var(--border);border-radius:14px;padding:24px;background:var(--bg2);transition:border-color .2s,transform .2s}
+.pr-card:hover{border-color:#ff6a0066;transform:translateY(-2px)}
+.pr-card .n{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#ff6a00;font-weight:700}
+.pr-card b{display:block;font-size:17px;margin:8px 0 8px;letter-spacing:-.01em}
+.pr-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.pr-card code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:5px;font-size:12px}
+
+.pr-tbl{max-width:920px;margin:0 auto;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg2)}
+.pr-tbl .r{display:grid;grid-template-columns:1.1fr 1.2fr 1fr;gap:16px;padding:15px 22px;border-top:1px solid var(--border);font-size:14px;align-items:center}
+.pr-tbl .r:first-child{border-top:0;background:rgba(255,255,255,.04);font-weight:700}
+.pr-tbl .r>span:first-child{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.pr-tbl .r .ours{color:#7ee787;font-weight:600}
+.pr-tbl .r .ours::before{content:"✓ ";color:#7ee787;font-weight:700}
+.pr-tbl .r .ours--warn{color:#ffa657}
+.pr-tbl .r .ours--warn::before{content:"◐ ";color:#ffa657}
+.pr-tbl .r .bad{color:var(--muted)}
+.pr-tbl .r .bad::before{content:"✗ ";color:#f85149;font-weight:700;opacity:.85}
+.pr-tbl .r .bad--ok{color:var(--muted)}
+.pr-tbl .r .bad--ok::before{content:"— ";color:var(--muted)}
+.pr-tbl--4 .r{grid-template-columns:1fr 1.25fr 1.15fr 1.15fr;font-size:13px}
+
+.pr-arch{max-width:820px;margin:0 auto;border:1px solid var(--border);border-radius:14px;background:#0d0f14;padding:26px}
+.pr-arch pre{margin:0;font-size:13px;line-height:1.7;color:#c9d1d9;overflow:auto}
+
+.pr-callout{max-width:820px;margin:44px auto 0;border-left:3px solid #ff6a00;background:var(--bg2);
+  border-radius:0 12px 12px 0;padding:18px 22px;color:var(--muted);font-size:14px;line-height:1.65}
+.pr-callout b{color:var(--fg)}
+
+.pr-foot{padding:72px 0 96px;text-align:center}
+.pr-foot .big{font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.03em}
+.pr-foot code{display:inline-block;margin-top:18px;background:#0d0f14;border:1px solid var(--border);
+  border-radius:10px;padding:14px 22px;font-size:14px;color:#7ee787}
+.pr-hero h1 .grad{background:linear-gradient(90deg,#ff6a00,#ffa657);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rr{background:linear-gradient(135deg,#ff6a00 20%,#ffa657 90%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 22px rgba(255,106,0,.45));margin-right:2px}
+.rmark{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-right:8px;border-radius:6px;
+  background:linear-gradient(135deg,#ff6a00,#ffa657);color:#0a0b0e;font-weight:800;font-size:15px;
+  box-shadow:0 0 18px rgba(255,106,0,.55);vertical-align:middle}
+.pr-vs .r{opacity:0;transform:translateX(-18px);transition:opacity .4s cubic-bezier(.2,.8,.2,1),transform .4s cubic-bezier(.2,.8,.2,1)}
+.pr-vs .r.on{opacity:1;transform:none}
+.pr-vs .r:nth-child(odd){transform:translateX(18px)}
+.pr-vs .r:nth-child(odd).on{transform:none}
+
+.pr-vs{max-width:none;width:100%;border-radius:18px;background:linear-gradient(160deg,#0d0f14,#0a0b0e);border-color:rgba(255,255,255,.13)}
+.pr-vs .r{padding:18px 30px;font-size:15px}
+.pr-vs .r>span{opacity:0;transform:translateX(-14px);transition:opacity .45s cubic-bezier(.2,.8,.2,1),transform .45s cubic-bezier(.2,.8,.2,1)}
+.pr-vs .r>span:nth-child(2){transform:translateX(-22px)}
+.pr-vs .r>span:nth-child(3){transform:translateX(22px)}
+.pr-vs .r>span:nth-child(4){transform:translateX(34px)}
+.pr-vs .r.on>span{opacity:1;transform:none}
+.pr-vs .r>span:first-child{transform:none}
+.pr-vs .r.on>span:first-child{opacity:1}
+.pr-vs .r{opacity:1;transform:none}
+.pr-vs .r:nth-child(odd){transform:none}
+.pr-vs .r.on{background:rgba(255,255,255,.015)}
+.pr-vs .r:first-child{opacity:1}
+.pr-vs .r:first-child>span{opacity:1;transform:none}
+.vs-facts{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;max-width:1320px;margin:0 auto;width:100%}
+.vs-fact{border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px 22px;background:rgba(255,255,255,.02);opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+.vs-beat.on .vs-fact{opacity:1;transform:none}
+.vs-beat.on .vs-fact:nth-child(1){transition-delay:.1s}.vs-beat.on .vs-fact:nth-child(2){transition-delay:.25s}
+.vs-beat.on .vs-fact:nth-child(3){transition-delay:.4s}.vs-beat.on .vs-fact:nth-child(4){transition-delay:.55s}
+.vs-fact.rp{border-color:#7ee787;background:rgba(126,231,135,.05)}
+.vs-num{display:block;font:800 58px/0.95 'Space Grotesk';letter-spacing:-.04em;color:#f85149;font-variant-numeric:tabular-nums;text-shadow:0 0 34px rgba(248,81,73,.35)}
+.vs-num.rp{color:#7ee787;text-shadow:0 0 34px rgba(126,231,135,.4)}
+.vs-fact-lbl{display:block;font-size:12.5px;color:#c9d1d9;margin-top:12px;line-height:1.5}
+.vs-fact-lbl em{color:#8b949e;font-style:normal;display:block;margin-top:4px;font-size:11.5px}
+.vs-fact-src{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#6a737d;margin-top:10px}
+.vs-punch{text-align:center;font:700 22px 'Space Grotesk';letter-spacing:-.01em;color:#ffa657;margin-top:34px;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+.vs-beat.on .vs-punch{opacity:1;transform:none;transition-delay:.9s}
+.vs-fact-lbl b{color:#ffa657;font-weight:700}
+@media (max-width:1100px){.vs-facts{grid-template-columns:repeat(3,1fr)}}@media (max-width:760px){.vs-facts{grid-template-columns:repeat(2,1fr)}}
+html,body{overflow-x:clip}
+</style>
+<style>
+.pr-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;text-align:left}
+.pr-hero-copy h1{margin:22px 0 12px}
+.pr-hero-copy .lede{margin:0 0 26px}
+.pr-hero-copy .pr-cta{justify-content:flex-start}
+.pr-hero-copy .pr-meta{justify-content:flex-start;margin-top:34px}
+.pr-hero-copy .pr-meta .m{border-left:1px solid var(--border);padding-left:16px}
+.pr-anim{position:relative;height:480px}
+.pr-anim-frame{position:relative;width:100%;height:100%;border:1px solid var(--border);border-radius:18px;background:linear-gradient(160deg,#0d0f14,#0a0b0e);overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.55)}
+.a-scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:34px;opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.a-scene.on{opacity:1;transform:none}
+.a-cap{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#ff6a00;margin-bottom:22px}
+.a-migrate .a-cap{margin-top:18px;margin-bottom:0}
+.a-term{width:100%;max-width:400px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:#0d0f14;overflow:hidden}
+.a-term-bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.a-term-bar i{width:9px;height:9px;border-radius:50%;background:#ff5f57}.a-term-bar i:nth-child(2){background:#febc2e}.a-term-bar i:nth-child(3){background:#28c840}
+.a-term pre{margin:0;padding:16px 18px;font:500 13.5px/1.85 'IBM Plex Mono',ui-monospace,monospace;color:#c9d1d9;white-space:pre-wrap}
+.a-term .g{color:#7ee787}
+.a-term .o{display:block;opacity:0;color:#8b949e;transition:opacity .3s}
+.a-term .o.show{opacity:1}
+.a-term .cmd-type{color:#ffa657;font-weight:600}
+.a-term .caret{display:inline-block;width:8px;height:15px;background:#7ee787;vertical-align:middle;animation:a-blink 1s steps(1) infinite}
+@keyframes a-blink{50%{opacity:0}}
+.a-row{display:flex;flex-direction:column;gap:8px;width:100%;max-width:420px;margin-bottom:26px}
+.a-lbl{font:600 13px 'IBM Plex Mono',ui-monospace,monospace;color:#f85149}
+.a-lbl.ours{color:#7ee787}
+.a-bars{display:flex;gap:4px;align-items:center}
+.a-bars i{height:20px;border-radius:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.9,.2,1)}
+.a-scene.on .a-bars i{transform:scaleX(1)}
+.a-bars .b1{width:34px}.a-bars .b2{width:60px}
+.a-bars.wp i{background:rgba(248,81,73,.12);border-color:rgba(248,81,73,.4)}
+.a-bars.wp .w1{width:56px;transition-delay:.1s}.a-bars.wp .w2{width:80px;transition-delay:.22s}
+.a-bars.wp .w3{width:96px;transition-delay:.34s}.a-bars.wp .w4{width:120px;transition-delay:.46s}
+.a-ms{font:700 15px 'Space Grotesk',sans-serif;color:#f85149;margin-left:10px;white-space:nowrap}
+.a-ms.ours{color:#7ee787}
+.a-cells{display:flex;gap:14px;width:100%;max-width:420px}
+.a-cell{flex:1;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:18px 16px;background:rgba(255,255,255,.02)}
+.a-cell.hot{border-color:#ff6a00;background:rgba(255,106,0,.08);box-shadow:0 0 30px rgba(255,106,0,.15)}
+.a-cell span{display:block;font:600 11px 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#8b949e}
+.a-cell b{display:block;font:700 16px 'Space Grotesk',sans-serif;color:#fff;margin-top:6px}
+.a-note{margin-top:20px;font:400 12.5px 'IBM Plex Mono',ui-monospace,monospace;color:#6a737d}
+.a-dots{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.a-dots .d{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:background .3s,transform .3s}
+.a-dots .d.on{background:#ff6a00;transform:scale(1.3)}
+@media (max-width:980px){
+  .pr-hero-grid{grid-template-columns:1fr;text-align:center}
+  .pr-hero-copy .pr-cta,.pr-hero-copy .pr-meta{justify-content:center}
+  .pr-hero-copy .pr-meta .m{border-left:none;border-top:1px solid var(--border);padding:10px 14px 0}
+  .pr-anim{height:380px}
+}
+</style>
+<style>
+.pr-how{border:1px solid var(--border);border-radius:18px;background:linear-gradient(160deg,#0d0f14,#0a0b0e);padding:34px 30px;margin-top:30px;font-family:'IBM Plex Mono',ui-monospace,monospace}
+.h-lane{margin-bottom:34px}
+.h-tag{font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.h-tag.pub{color:#ff6a00}.h-tag.srv{color:#7ee787}
+.h-flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.h-node{border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:13px 18px;font-size:14px;color:#c9d1d9;background:rgba(255,255,255,.02);
+  opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s,border-color .45s,box-shadow .45s}
+.h-node.on{opacity:1;transform:none}
+.h-node.lit{border-color:#ff6a00;box-shadow:0 0 22px rgba(255,106,0,.3);color:#fff}
+.h-node.hit{border-color:#7ee787;color:#7ee787}
+.h-node.hit.lit{box-shadow:0 0 22px rgba(126,231,135,.3)}
+.h-node.hot{border-color:#ff6a00;color:#ffa657}
+.h-edge{width:38px;height:2px;background:linear-gradient(90deg,transparent,var(--border),transparent);position:relative;flex:none;opacity:0;transition:opacity .3s}
+.h-edge::after{content:"";position:absolute;right:-2px;top:-4px;border:5px solid transparent;border-left-color:#8b949e}
+.h-edge.on{opacity:1}
+.h-wp{margin-top:16px;display:flex;align-items:center;gap:14px;opacity:0;transition:opacity .5s}
+.h-wp.on{opacity:1}
+.h-wp-lbl{font-size:12px;color:#f85149}
+.h-wp-bars{display:flex;gap:4px;align-items:center}
+.h-wp-bars i{height:14px;border-radius:4px;background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.4);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.h-wp.on .h-wp-bars i{transform:scaleX(1)}
+.h-wp-bars i:nth-child(1){width:40px;transition-delay:.1s}.h-wp-bars i:nth-child(2){width:56px;transition-delay:.2s}
+.h-wp-bars i:nth-child(3){width:70px;transition-delay:.3s}.h-wp-bars i:nth-child(4){width:80px;transition-delay:.4s}
+.h-wp-bars i:nth-child(5){width:92px;transition-delay:.5s}.h-wp-bars i:nth-child(6){width:64px;transition-delay:.6s}
+.h-wp-bars b{font:700 14px 'Space Grotesk';color:#f85149;margin-left:8px;white-space:nowrap}
+.h-disk{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px dashed var(--border);padding-top:22px}
+.h-cell{border:1px solid rgba(255,255,255,.13);border-radius:10px;padding:14px 16px;font-size:13px;color:#8b949e;opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+.h-cell.on{opacity:1;transform:none}
+.h-cell span{display:block;font-weight:600;color:#fff;margin-bottom:4px;font-size:14px}
+.h-cell.hot{border-color:#ff6a00;background:rgba(255,106,0,.06)}
+.h-cell.hot span{color:#ffa657}
+@media (max-width:760px){.h-disk{grid-template-columns:1fr}.h-edge{width:24px}}
+</style>
+<style>
+.h-sec{border-top:1px dashed var(--border);padding-top:26px;margin-top:6px}
+.h-tag.atk{color:#f85149}
+.h-arch{display:flex;flex-direction:column;gap:10px}
+.h-arch-row{display:grid;grid-template-columns:190px 1fr 260px;gap:16px;align-items:center;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:13px 16px;background:rgba(255,255,255,.015);
+  opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.h-arch-row.on{opacity:1;transform:none}
+.a-what{font-weight:600;color:#ffa657;font-size:12.5px}
+.a-how{font-size:12.5px;color:#c9d1d9;line-height:1.55}
+.a-how code{color:#79c0ff;font-size:11.5px}
+.a-how b{color:#fff}
+.a-kills{font-size:11px;color:#f85149;line-height:1.5;border-left:2px solid rgba(248,81,73,.4);padding-left:12px}
+.h-atk-note{margin-top:18px;font-size:13px;color:#8b949e;opacity:0;transition:opacity .5s;line-height:1.6}
+.h-atk-note.on{opacity:1}
+.h-atk-note b{color:#fff}.h-atk-note i{color:#ffa657;font-style:normal}
+@media (max-width:860px){.h-arch-row{grid-template-columns:1fr;gap:8px}.a-kills{border-left:none;padding-left:0}}
+</style>
+<style>
+.vs-stage{position:relative;margin-top:28px;margin-left:calc(50% - 50vw);width:100vw;max-width:100vw;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:
+    radial-gradient(60% 90% at 18% 10%,rgba(255,106,0,.07),transparent 60%),
+    radial-gradient(50% 80% at 85% 90%,rgba(126,231,135,.05),transparent 60%),
+    linear-gradient(160deg,#0d0f14,#07080b);
+  min-height:520px;overflow:hidden;font-family:'IBM Plex Mono',ui-monospace,monospace}
+.vs-beat{inset:0;padding:56px max(40px,calc(50vw - 640px)) 72px}
+.vs-cap{font-size:14px;letter-spacing:.3em}
+.vs-track,.vs-mill,.vs-ram{max-width:1180px}
+.vs-attack{max-width:1280px}
+.vs-lane{grid-template-columns:200px 1fr 190px}
+.vs-name{font-size:15px}
+.vs-time{font-size:13px}
+.vs-run{height:40px}
+.vs-runner{width:18px;height:18px}
+.vs-runner::after{content:"";position:absolute;right:14px;top:50%;transform:translateY(-50%);width:120px;height:2px;
+  background:linear-gradient(90deg,rgba(126,231,135,.6),transparent)}
+.vs-runner i{font-size:11px}
+@keyframes vs-run{from{left:0}to{left:calc(100% - 18px)}}
+.vs-wpbox,.vs-rpbox{padding:22px 20px 50px}
+.vs-box-lbl{font-size:13px}
+.vs-wpbox i,.vs-rpbox i{font-size:12.5px;padding:6px 0}
+.vs-conveyor i{font-size:14px;padding:10px 20px}
+.vs-rambar{height:52px}
+.vs-rambar .seg{font-size:13px;padding:0 18px}
+.vs-beat{position:absolute;inset:0;padding:44px 40px 60px;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.vs-beat.on{opacity:1;transform:none}
+.vs-cap{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#ff6a00;text-align:center;margin-bottom:34px}
+.vs-dots{position:absolute;bottom:22px;left:0;right:0;display:flex;gap:8px;justify-content:center}
+.vs-dots .d{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:background .3s,transform .3s}
+.vs-dots .d.on{background:#ff6a00;transform:scale(1.3)}
+.vs-track{display:flex;flex-direction:column;gap:14px;max-width:880px;margin:0 auto;width:100%}
+.vs-lane{display:grid;grid-template-columns:160px 1fr 150px;align-items:center;gap:16px}
+.vs-name{font-size:13px;font-weight:600;color:#c9d1d9}
+.vs-name.ours{color:#7ee787}
+.vs-run{position:relative;height:34px;border-radius:9px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);overflow:hidden}
+.vs-runner{position:absolute;top:50%;left:0;width:14px;height:14px;border-radius:50%;transform:translateY(-50%);background:#7ee787;box-shadow:0 0 16px #7ee787}
+.vs-runner.wp,.vs-runner.nx,.vs-runner.hc{width:auto;height:auto;top:0;left:0;right:0;bottom:0;border-radius:0;background:transparent;box-shadow:none;display:flex;align-items:stretch;gap:4px;padding:4px;transform:none}
+.vs-runner i{flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;font-style:normal;border-radius:5px;background:rgba(248,81,73,.14);border:1px solid rgba(248,81,73,.4);color:#f85149;opacity:0;transform:scaleX(.3);transition:opacity .4s,transform .4s}
+.vs-beat.on .vs-runner i{opacity:1;transform:none}
+.vs-runner.nx i{background:rgba(255,169,77,.12);border-color:rgba(255,169,77,.4);color:#ffa94d}
+.vs-runner.hc i{background:rgba(139,148,158,.12);border-color:rgba(139,148,158,.4);color:#8b949e}
+.vs-beat.on .vs-runner.ours{animation:vs-run 1.1s cubic-bezier(.2,.8,.2,1) .3s forwards}
+@keyframes vs-run{from{left:0}to{left:calc(100% - 14px)}}
+.vs-time{font-size:12px;color:#8b949e}
+.vs-time.ours{color:#7ee787;font-weight:700}
+.vs-attack{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1100px;margin:0 auto;width:100%}
+.vs-wpbox,.vs-rpbox{position:relative;border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:18px 16px 44px;background:rgba(255,255,255,.02)}
+.vs-rpbox{border-color:#7ee787;background:rgba(126,231,135,.05)}
+.vs-box-lbl{display:block;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#f85149;margin-bottom:14px}
+.vs-rpbox .vs-box-lbl{color:#7ee787}
+.vs-wpbox i,.vs-rpbox i{display:block;font-style:normal;font-size:11.5px;padding:5px 0;color:#f85149;opacity:0;transform:translateX(-10px);transition:opacity .35s,transform .35s}
+.vs-wpbox i::before{content:"✗ ";color:#f85149}
+.vs-rpbox i{color:#7ee787}
+.vs-rpbox i::before{content:"✓ "}
+.vs-beat.on .vs-wpbox i,.vs-beat.on .vs-rpbox i{opacity:1;transform:none}
+.vs-beat.on i:nth-child(3){transition-delay:.15s}.vs-beat.on i:nth-child(4){transition-delay:.3s}
+.vs-beat.on i:nth-child(5){transition-delay:.45s}.vs-beat.on i:nth-child(6){transition-delay:.6s}.vs-beat.on i:nth-child(7){transition-delay:.75s}
+.vs-box-status{position:absolute;bottom:14px;left:16px;right:16px;font-size:10.5px;color:#8b949e}
+.vs-box-status.ok{color:#7ee787}
+.vs-mill{max-width:880px;margin:0 auto;width:100%}
+.vs-conveyor{display:flex;gap:10px;overflow:hidden;white-space:nowrap;padding:8px 0;margin-bottom:12px}
+.vs-conveyor i{flex:none;font-style:normal;font-size:13px;padding:9px 16px;border-radius:9px;background:rgba(248,81,73,.09);border:1px solid rgba(248,81,73,.35);color:#f85149;animation:vs-belt 9s linear infinite}
+.vs-conveyor.nx i{background:rgba(255,169,77,.09);border-color:rgba(255,169,77,.35);color:#ffa94d;animation-duration:7s}
+@keyframes vs-belt{from{transform:translateX(40px)}to{transform:translateX(-460px)}}
+.vs-note{text-align:center;font-size:13px;color:#8b949e;margin-top:14px}
+.vs-note b{color:#7ee787}
+.vs-ram{max-width:880px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:14px}
+.vs-rambar{display:flex;height:44px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02)}
+.vs-rambar .seg{display:flex;align-items:center;padding:0 14px;font-size:12px;white-space:nowrap;overflow:hidden;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.vs-beat.on .seg{transform:scaleX(1)}
+.vs-rambar .seg:nth-child(2){transition-delay:.25s}
+.seg.rp{background:rgba(126,231,135,.14);color:#7ee787;font-weight:700}
+.seg.free{color:#6a737d}
+.seg.wp{background:rgba(248,81,73,.14);color:#f85149}
+.seg.nx{background:rgba(255,169,77,.14);color:#ffa94d}
+.seg.hc{background:rgba(139,148,158,.14);color:#8b949e}
+.seg.tight{color:#8b949e}
+@media (max-width:1100px){.vs-facts{grid-template-columns:repeat(3,1fr)}.vs-num{font-size:44px}}
+@media (max-width:900px){
+  .vs-stage{min-height:640px}
+  .vs-attack{grid-template-columns:repeat(2,1fr)}
+  .vs-lane{grid-template-columns:130px 1fr 120px;gap:10px}
+  .vs-name{font-size:12px}
+  .vs-time{font-size:10px}
+  .vs-beat{padding:44px 26px 68px}
+}
+@media (max-width:640px){
+  .vs-stage{min-height:760px}
+  .vs-facts{grid-template-columns:1fr 1fr;gap:10px}
+  .vs-num{font-size:34px}
+  .vs-fact{padding:14px 14px}
+  .vs-fact-lbl{font-size:11px}
+  .vs-fact-src{font-size:9px}
+  .vs-lane{grid-template-columns:1fr;gap:6px}
+  .vs-name{font-size:12px}
+  .vs-time{font-size:10px}
+  .vs-attack{grid-template-columns:1fr;gap:10px}
+  .vs-wpbox,.vs-rpbox{padding:14px 14px 40px}
+  .vs-box-status{position:static;margin-top:8px}
+  .vs-rambar{height:38px}
+  .vs-rambar .seg{font-size:10px;padding:0 8px}
+  .vs-punch{font-size:16px;margin-top:20px}
+  .vs-dots{bottom:14px}
+}
+@media (max-width:640px){
+  .vs-beat{padding:32px 18px 56px}
+  .vs-stage{min-height:780px}
+  .vs-cap{margin-bottom:22px;font-size:11px;letter-spacing:.24em}
+  .vs-wpbox i,.vs-rpbox i{font-size:10.5px;padding:4px 0}
+  .vs-box-lbl{font-size:11px;margin-bottom:10px}
+  .vs-facts .vs-fact:nth-child(5){grid-column:1/-1}
+}
+</style>
+<section class="pr-hero">
+  <div class="container pr-hero-grid">
+    <div class="pr-hero-copy">
+      <span class="pr-kicker"><span class="rmark">ℝ</span> <b>RPress</b> · Open source · Rust · MIT</span>
+      <h1><span class="rr">ℝ</span>Press,<br><span class="grad">back to simple.</span></h1>
+      <p class="lede">One 14 MB binary: wp-admin parity, <b>static-file serving</b>, no PHP.</p>
+      <div class="pr-cta">
+        <a class="pr-btn pr-btn--primary" href={p.repo} target="_blank" rel="noopener">★ Star on GitHub</a>
+        <a class="pr-btn pr-btn--ghost" href="https://github.com/hieuspaceos/rpress" target="_blank" rel="noopener"><code>rpress migrate dump.sql</code></a>
+      </div>
+      <div class="pr-meta">
+        <div class="m"><span>Binary</span><b>14 MB</b></div>
+        <div class="m"><span>TTFB</span><b>&lt;5 ms</b></div>
+        <div class="m"><span>Migrate</span><b>1 command</b></div>
+      </div>
+    </div>
+
+    <div class="pr-anim" aria-hidden="true">
+      <div class="pr-anim-frame">
+        <!-- scene A: migrate terminal -->
+        <div class="a-scene a-migrate">
+          <div class="a-term">
+            <div class="a-term-bar"><i></i><i></i><i></i></div>
+            <pre><span class="g">$</span> <span class="cmd-type"></span><span class="caret"></span>
+<span class="o o1">→ imported 951 posts · 49 pages · 9,622 media</span>
+<span class="o o2">→ rendered 1,239 pages → cache/</span></pre>
+          </div>
+          <div class="a-cap">migrate · one command</div>
+        </div>
+        <!-- scene B: request waterfall -->
+        <div class="a-scene a-waterfall">
+          <div class="a-cap">one request, both stacks</div>
+          <div class="a-row"><span class="a-lbl ours">RPress</span><div class="a-bars"><i class="b b1"></i><i class="b b2"></i><b class="a-ms ours">2 ms</b></div></div>
+          <div class="a-row"><span class="a-lbl">wordpress</span><div class="a-bars wp"><i class="b w1"></i><i class="b w2"></i><i class="b w3"></i><i class="b w4"></i><b class="a-ms">~600 ms</b></div></div>
+        </div>
+        <!-- scene C: disk model -->
+        <div class="a-scene a-disk">
+          <div class="a-cap">what lives on disk</div>
+          <div class="a-cells">
+            <div class="a-cell"><span>site.db</span><b>content</b></div>
+            <div class="a-cell hot"><span>cache/</span><b>served files</b></div>
+            <div class="a-cell"><span>www/</span><b>uploads</b></div>
+          </div>
+          <div class="a-note">cache is disposable · regenerate anytime</div>
+        </div>
+      </div>
+      <div class="a-dots"><i class="d on" data-i="0"></i><i class="d" data-i="1"></i><i class="d" data-i="2"></i></div>
+    </div>
+  </div>
+</section>
+
+<section class="pr-sec">
+  <div class="container">
+    <h2>RPress vs the usual</h2>
+    <p class="sub">Four stories, same ending — against WordPress, Next.js, and headless CMSs.</p>
+    <div class="vs-stage" id="vs-stage">
+      <!-- BEAT 0: receipts -->
+      <div class="vs-beat" data-beat="r">
+        <div class="vs-cap">2025 — the year the stack ate itself</div>
+        <div class="vs-facts">
+          <div class="vs-fact">
+            <b class="vs-num" data-n="11334">0</b>
+            <span class="vs-fact-lbl">new WordPress CVEs in 2025 — <b>+42%</b> over 2024<em>~91% live in plugins &amp; themes, not core</em></span>
+            <span class="vs-fact-src">patchstack · state of wp security 2026</span>
+          </div>
+          <div class="vs-fact">
+            <b class="vs-num" data-n="13000" data-suf="">0</b>
+            <span class="vs-fact-lbl">WordPress sites hacked <b>every single day</b><em>~4.7 million a year, mostly automated botnets</em></span>
+            <span class="vs-fact-src">industry estimate · wordfence telemetry</span>
+          </div>
+          <div class="vs-fact">
+            <b class="vs-num" data-n="500" data-suf="+">0</b>
+            <span class="vs-fact-lbl">npm packages hijacked by <b>Shai-Hulud</b> — a worm that steals tokens, publishes itself<em>Sep 2025 · v2.0 leaked 25,000+ repos in Nov</em></span>
+            <span class="vs-fact-src">cisa aa25-266a · wiz research</span>
+          </div>
+          <div class="vs-fact">
+            <b class="vs-num" data-n="15" data-pre="~" data-suf=" min">0</b>
+            <span class="vs-fact-lbl">for AI to turn a fresh CVE into a <b>working exploit</b> — at ~$1 per try<em>28.3% of 2025 CVEs exploited within 24h of disclosure — before you even read the advisory</em></span>
+            <span class="vs-fact-src">vulncheck · csa exploit-window report</span>
+          </div>
+          <div class="vs-fact rp">
+            <b class="vs-num rp" data-n="0">0</b>
+            <span class="vs-fact-lbl">runtime deps in RPress.<em>no PHP · no node_modules · no API keys · no vendor to breach — the attack surface <b>is</b> the binary</em></span>
+            <span class="vs-fact-src">rpress · back to simple</span>
+          </div>
+        </div>
+        <div class="vs-punch">AI doesn't patch your site. it patches its <b>target list</b> — with your domain on it.</div>
+      </div>
+
+      <!-- BEAT 1: weight race -->
+      <div class="vs-beat" data-beat="0">
+        <div class="vs-cap">the weight race</div>
+        <div class="vs-track">
+          <div class="vs-lane">
+            <span class="vs-name ours">ℝ RPress</span>
+            <div class="vs-run"><span class="vs-runner ours"></span></div>
+            <span class="vs-time ours">14 MB · done</span>
+          </div>
+          <div class="vs-lane">
+            <span class="vs-name">WordPress</span>
+            <div class="vs-run"><span class="vs-runner wp"><i class="b b1">php-fpm</i><i class="b b2">mysql</i><i class="b b3">plugins</i><i class="b b4">themes</i></span></div>
+            <span class="vs-time">…still loading</span>
+          </div>
+          <div class="vs-lane">
+            <span class="vs-name">Next.js + headless</span>
+            <div class="vs-run"><span class="vs-runner nx"><i class="b">node</i><i class="b">next build</i><i class="b">cms api</i><i class="b">isr</i></span></div>
+            <span class="vs-time">…building pages</span>
+          </div>
+          <div class="vs-lane">
+            <span class="vs-name">Headless CMS × CDN</span>
+            <div class="vs-run"><span class="vs-runner hc"><i class="b">saas api</i><i class="b">rate limit</i><i class="b">edge fn</i></span></div>
+            <span class="vs-time">…api round-trip</span>
+          </div>
+        </div>
+      </div>
+      <!-- BEAT 2: attack surface -->
+      <div class="vs-beat" data-beat="1">
+        <div class="vs-cap">the attack surface</div>
+        <div class="vs-attack">
+          <div class="vs-wpbox">
+            <span class="vs-box-lbl">wordpress</span>
+            <i class="hit h1">wp-admin</i><i class="hit h2">xmlrpc</i><i class="hit h3">plugin CVE</i><i class="hit h4">shell.php</i><i class="hit h5">sqli</i>
+            <span class="vs-box-status">breached · patch № 4,812</span>
+          </div>
+          <div class="vs-wpbox nx">
+            <span class="vs-box-lbl">next.js + headless</span>
+            <i class="hit h1">node_modules CVE</i><i class="hit h2">leaked CMS token</i><i class="hit h3">ssrf via api</i><i class="hit h4">dep confusion</i>
+            <span class="vs-box-status">supply-chain roulette</span>
+          </div>
+          <div class="vs-wpbox hc">
+            <span class="vs-box-lbl">headless cms</span>
+            <i class="hit h1">api key leak</i><i class="hit h2">webhook spoof</i><i class="hit h3">vendor breach</i>
+            <span class="vs-box-status">your data, their uptime</span>
+          </div>
+          <div class="vs-rpbox">
+            <span class="vs-box-lbl">ℝ rpress</span>
+            <i class="miss m1">wp-admin → 404</i><i class="miss m2">no deps at runtime</i><i class="miss m3">no api keys</i>
+            <span class="vs-box-status ok">boring by design</span>
+          </div>
+        </div>
+      </div>
+      <!-- BEAT 3: maintenance treadmill -->
+      <div class="vs-beat" data-beat="2">
+        <div class="vs-cap">the patch treadmill</div>
+        <div class="vs-mill">
+          <div class="vs-conveyor">
+            <i>update 6.5.4</i><i>patch plugin</i><i>fix CVE-2025-…</i><i>update theme</i><i>php 8.3 bump</i><i>update again</i>
+          </div>
+          <div class="vs-conveyor nx">
+            <i>next 15.x bump</i><i>npm audit fix</i><i>cms sdk breaking</i><i>node lts eol</i><i>edge api rename</i><i>rebuild cache</i>
+          </div>
+          <div class="vs-note">wordpress + next.js: forever · RPress: <b>cargo build</b> when you feel like it</div>
+        </div>
+      </div>
+      <!-- BEAT 4: RAM + VPS -->
+      <div class="vs-beat" data-beat="3">
+        <div class="vs-cap">a $5 VPS, shared honestly</div>
+        <div class="vs-ram">
+          <div class="vs-rambar"><span class="seg rp" style="flex:0 0 6%">ℝ 30MB</span><span class="seg free" style="flex:0 0 94%">room for ~15 more sites</span></div>
+          <div class="vs-rambar"><span class="seg wp" style="flex:0 0 55%">WP ~500MB+</span><span class="seg tight" style="flex:0 0 45%">already tight</span></div>
+          <div class="vs-rambar"><span class="seg nx" style="flex:0 0 30%">Next node ~200MB</span><span class="seg tight" style="flex:0 0 70%">+ cms saas bill $$</span></div>
+          <div class="vs-rambar"><span class="seg hc" style="flex:0 0 12%">static 0MB</span><span class="seg tight" style="flex:0 0 88%">but cms saas $$$/mo elsewhere</span></div>
+        </div>
+      </div>
+      <div class="vs-dots"><i class="d on"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i></div>
+    </div>
+    <div class="pr-callout">Content sites — posts, pages, galleries, comments — RPress wins every row that matters. Store/forum/membership → keep WordPress.</div>
+  </div>
+</section>
+
+<section class="pr-sec">
+  <div class="container">
+    <h2>How</h2>
+    <p class="sub">Write once at publish. Read a file forever after.</p>
+    <div class="pr-how" id="pr-how">
+      <!-- publish lane -->
+      <div class="h-lane">
+        <div class="h-tag pub">publish · once</div>
+        <div class="h-flow">
+          <div class="h-node" data-k="p1">admin save</div>
+          <div class="h-edge" data-k="e1"></div>
+          <div class="h-node" data-k="p2">render + jinja</div>
+          <div class="h-edge" data-k="e2"></div>
+          <div class="h-node hot" data-k="p3">atomic write → cache/</div>
+        </div>
+      </div>
+      <!-- serve lane -->
+      <div class="h-lane">
+        <div class="h-tag srv">serve · per request</div>
+        <div class="h-flow">
+          <div class="h-node" data-k="s1">GET /slug</div>
+          <div class="h-edge" data-k="e3"></div>
+          <div class="h-node" data-k="s2">hit?</div>
+          <div class="h-edge" data-k="e4"></div>
+          <div class="h-node hit" data-k="s3">fs::read → 200 · <b>µs–2 ms</b></div>
+        </div>
+        <div class="h-wp">
+          <span class="h-wp-lbl">wordpress, same request:</span>
+          <div class="h-wp-bars"><i></i><i></i><i></i><i></i><i></i><i></i><b>~600 ms</b></div>
+        </div>
+      </div>
+      <!-- disk -->
+      <div class="h-disk">
+        <div class="h-cell"><span>site.db</span>content — source of truth</div>
+        <div class="h-cell hot"><span>cache/</span>the served site — disposable</div>
+        <div class="h-cell"><span>www/</span>uploads — back this up</div>
+      </div>
+      <!-- attack lane: why exploits bounce -->
+      <div class="h-lane h-sec">
+        <div class="h-tag atk">born unhackable — the mechanism</div>
+        <div class="h-arch">
+          <div class="h-arch-row">
+            <div class="a-what">public request path</div>
+            <div class="a-how"><code>GET /slug</code> → <code>fs::read("cache/slug/index.html")</code> → bytes out. <b>No template runs. No query executes. No interpreter exists on the public path.</b></div>
+            <div class="a-kills">kills: RCE · SQLi · template injection · plugin exploits</div>
+          </div>
+          <div class="h-arch-row">
+            <div class="a-what">/wp-admin · /xmlrpc.php</div>
+            <div class="a-how">Those routes simply <b>don't exist in the router</b>. Bots get a plain 404 — same as any unknown URL.</div>
+            <div class="a-kills">kills: wp-admin brute force · xmlrpc pingback/DDoS · WPSCAN fingerprinting</div>
+          </div>
+          <div class="h-arch-row">
+            <div class="a-what">file uploads</div>
+            <div class="a-how">Extension allowlist — <code>.php .phtml .phar .htaccess</code> rejected at upload. Even a bypass lands in <code>www/</code> as bytes: <b>a PHP shell is a text file here.</b></div>
+            <div class="a-kills">kills: web shells · double-extension tricks · upload RCE</div>
+          </div>
+          <div class="h-arch-row">
+            <div class="a-what">dependencies</div>
+            <div class="a-how">Runtime = <b>1 static binary + 1 SQLite file</b>. No node_modules to poison, no PHP to exploit, no SaaS key to leak.</div>
+            <div class="a-kills">kills: Shai-Hulud class worms · dep confusion · vendor breach</div>
+          </div>
+          <div class="h-arch-row">
+            <div class="a-what">the admin that does exist</div>
+            <div class="a-how">wp-admin-parity UI, behind: <b>argon2</b> · SQLite-backed sessions + cookie <b>HttpOnly·Secure·SameSite</b> · per-session <b>CSRF</b> · rate-limited intake.</div>
+            <div class="a-kills">limits: credential stuffing · CSRF · session theft</div>
+          </div>
+          <div class="h-arch-row">
+            <div class="a-what">cache miss path</div>
+            <div class="a-how">Renders once via <b>prepared statements</b>, writes back atomically, never queries for that URL again. SQLite has no network socket to attack.</div>
+            <div class="a-kills">kills: SQLi via params · DB network attacks · MySQL CVEs</div>
+          </div>
+        </div>
+        <div class="h-atk-note">RPress wasn't hardened <i>after</i> the fact — <b>the architecture itself is the defense.</b> exploits need something to run <i>against</i>; the public path executes zero code.</div>
+      </div>
+
+    </div>
+    <div class="pr-callout"><b>The cache is the site.</b> Idles at ~30 MB, TTFB &lt;5 ms, $5 VPS runs a fleet. nginx can front <code>cache/</code> directly — the binary is only needed for admin and misses.</div>
+  </div>
+</section>
+
+
+
+</Base>
+<script>
+(function(){
+  const frame = document.querySelector('.pr-anim');
+  if (!frame) return;
+  const scenes = Array.from(frame.querySelectorAll('.a-scene'));
+  const dots   = Array.from(frame.querySelectorAll('.a-dots .d'));
+  const cmd    = 'rpress migrate dump.sql --site-url https://example.com';
+  const typeEl = frame.querySelector('.cmd-type');
+  const outs   = frame.querySelectorAll('.a-term .o');
+  let i = 0, timer = null, typeTimer = null;
+
+  function typeCmd(k=0){
+    typeEl.textContent = cmd.slice(0,k);
+    outs.forEach(o=>o.classList.remove('show'));
+    if (k < cmd.length) typeTimer = setTimeout(()=>typeCmd(k+1), 26);
+    else {
+      outs.forEach((o,idx)=>setTimeout(()=>o.classList.add('show'), 400+idx*420));
+    }
+  }
+  function show(n){
+    scenes.forEach((s,j)=>s.classList.toggle('on', j===n));
+    dots.forEach((d,j)=>d.classList.toggle('on', j===n));
+    if (n===0) typeCmd();
+  }
+  function next(){ i=(i+1)%scenes.length; show(i); timer=setTimeout(next, i===0?5200:4200); }
+  dots.forEach((d,j)=>d.parentElement.addEventListener('click',e=>{e.preventDefault();i=j;clearTimeout(timer);clearTimeout(typeTimer);show(i);timer=setTimeout(next,4200)}));
+  show(0);
+  timer=setTimeout(next,5200);
+})();
+</script>
+<script>
+(function(){
+  const how = document.getElementById('pr-how');
+  if (!how) return;
+  const order = ['p1','e1','p2','e2','p3','s1','e3','s2','e4','s3'];
+  const els = Object.fromEntries(order.map(k=>[k, how.querySelector('[data-k="'+k+'"]')]));
+  const wp = how.querySelector('.h-wp');
+  const cells = how.querySelectorAll('.h-cell');
+  let done = false;
+  function run(){
+    if (done) return; done = true;
+    order.forEach((k,i)=>{
+      setTimeout(()=>{
+        const el = els[k];
+        el.classList.add('on');
+        if (k.startsWith('p') || k==='s3') { el.classList.add('lit'); setTimeout(()=>el.classList.remove('lit'), 900); }
+      }, 300 + i*330);
+    });
+    setTimeout(()=>wp.classList.add('on'), 300 + order.length*330);
+    cells.forEach((c,i)=>setTimeout(()=>c.classList.add('on'), 300 + order.length*330 + 500 + i*200));
+    const base = 300 + order.length*330 + 1400;
+    how.querySelectorAll('.h-arch-row').forEach((r,i)=>setTimeout(()=>r.classList.add('on'), base + i*260));
+    setTimeout(()=>how.querySelector('.h-atk-note').classList.add('on'), base + 6*260 + 300);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((es,ob)=>{ if (es[0].isIntersecting){ run(); ob.disconnect(); } },{threshold:.3}).observe(how);
+  } else run();
+})();
+</script>
+<script>
+(function(){
+  const stage = document.getElementById('vs-stage');
+  if (!stage) return;
+  const beats = Array.from(stage.querySelectorAll('.vs-beat'));
+  const dots  = Array.from(stage.querySelectorAll('.vs-dots .d'));
+  let i = 0, timer = null;
+  let counted = false;
+  function show(n){
+    beats.forEach((b,j)=>b.classList.toggle('on', j===n));
+    dots.forEach((d,j)=>d.classList.toggle('on', j===n));
+    if (n===0 && !counted){
+      counted = true;
+      stage.querySelectorAll('.vs-num').forEach(el=>{
+        const target = +el.dataset.n, suf = el.dataset.suf||'', pre = el.dataset.pre||'';
+        const t0 = performance.now(), dur = 1100;
+        (function tick(t){
+          const p = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-p,3);
+          el.textContent = pre + Math.round(target*e).toLocaleString('en-US') + suf;
+          if (p<1) requestAnimationFrame(tick);
+        })(t0);
+      });
+    }
+  }
+  function next(){ i=(i+1)%beats.length; show(i); timer=setTimeout(next,4600); }
+  show(0);
+  timer=setTimeout(next,4600);
+  dots.forEach((d,j)=>d.addEventListener('click',()=>{i=j;clearTimeout(timer);show(i);timer=setTimeout(next,4600)}));
+})();
+</script>
