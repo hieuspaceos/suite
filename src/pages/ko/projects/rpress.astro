@@ -326,6 +326,97 @@ const p = projects.find(x => x.id === 'rpress');
   </div>
 </section>
 
+<style>
+.cli-stage{position:relative;max-width:880px;margin:0 auto;border:1px solid var(--border);border-radius:18px;
+  background:linear-gradient(160deg,#0d0f14,#0a0b0e);overflow:hidden;min-height:430px;
+  box-shadow:0 40px 90px rgba(0,0,0,.55);font-family:'IBM Plex Mono',ui-monospace,monospace;text-align:left}
+.cli-beat{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:40px 34px 56px;
+  opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.cli-beat.on{opacity:1;transform:none}
+.cli-cap{text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#ff6a00;margin-bottom:20px}
+.cli-term{width:100%;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:#0d0f14;overflow:hidden}
+.cli-bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.cli-bar i{width:9px;height:9px;border-radius:50%;background:#ff5f57}
+.cli-bar i:nth-child(2){background:#febc2e}.cli-bar i:nth-child(3){background:#28c840}
+.cli-term pre{margin:0;padding:16px 20px;font-size:13px;line-height:1.9;color:#c9d1d9;overflow:auto;white-space:pre-wrap}
+.cl{display:block;opacity:0;transform:translateX(-10px);transition:opacity .35s,transform .35s}
+.cli-beat.on .cl{opacity:1;transform:none}
+.cli-beat.on .cl:nth-child(1){transition-delay:.1s}.cli-beat.on .cl:nth-child(2){transition-delay:.28s}
+.cli-beat.on .cl:nth-child(3){transition-delay:.46s}.cli-beat.on .cl:nth-child(4){transition-delay:.64s}
+.cli-beat.on .cl:nth-child(5){transition-delay:.82s}.cli-beat.on .cl:nth-child(6){transition-delay:1s}
+.cli-beat.on .cl:nth-child(7){transition-delay:1.18s}.cli-beat.on .cl:nth-child(8){transition-delay:1.36s}
+.cli-beat.on .cl:nth-child(9){transition-delay:1.54s}.cli-beat.on .cl:nth-child(10){transition-delay:1.72s}
+.cli-term .g{color:#7ee787}.cli-term .o{color:#ffa657}.cli-term .c{color:#6a737d}.cli-term .p{color:#79c0ff}
+.cli-term b{color:#fff;font-weight:600}
+.cli-dots{position:absolute;bottom:16px;left:0;right:0;display:flex;gap:8px;justify-content:center}
+.cli-dots .d{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);cursor:pointer;transition:background .3s,transform .3s}
+.cli-dots .d.on{background:#ff6a00;transform:scale(1.3)}
+@media (max-width:640px){.cli-stage{min-height:520px}.cli-term pre{font-size:11px}}
+</style>
+<section class="pr-sec">
+  <div class="container">
+    <h2>rpress site — the pipeline</h2>
+    <p class="sub">WP clone → localhost sandbox → production. One subcommand per step; it probes, it doesn't ask twice.</p>
+    <div class="cli-stage" id="cli-stage">
+      <div class="cli-beat">
+        <div class="cli-cap">init · probe, don't ask</div>
+        <div class="cli-term">
+          <div class="cli-bar"><i></i><i></i><i></i></div>
+          <pre><span class="cl g">$ rpress site init mysite --source ssh --ssh prod-vps</span>
+<span class="cl">probing prod-vps … <b>ok</b></span>
+<span class="cl">wp-config → /var/www/mysite/htdocs</span>
+<span class="cl">db = wp_mysite (prefix wp_) <b>+wp-cli</b></span>
+<span class="cl">dump → ~/mysite-2026-10.sql (304 MB)</span>
+<span class="cl">site_url = <span class="p">https://mysite.com</span>  <span class="c">← live db</span></span>
+<span class="cl g">wrote sites/mysite.env</span></pre>
+        </div>
+      </div>
+      <div class="cli-beat">
+        <div class="cli-cap">build · per-phase status</div>
+        <div class="cli-term">
+          <div class="cli-bar"><i></i><i></i><i></i></div>
+          <pre><span class="cl g">$ rpress site build mysite</span>
+<span class="cl"><span class="p">[pull]</span>      ok   294 MB dump · 7 asset trees · 43s</span>
+<span class="cl"><span class="p">[import]</span>    ok   204 checks · rpress.db 96 MB · 9s</span>
+<span class="cl"><span class="p">[configure]</span> ok   site_url→localhost · 23 menus · 75 redirects</span>
+<span class="cl"><span class="p">[generate]</span>  ok   1,239 pages + pagefind · 138s</span>
+<span class="cl"><span class="p">[check]</span>     <span class="o">warn</span> 3 pages still link origin (content refs)</span>
+<span class="cl c"># fail → [phase] FAIL + hint; resume with --from &lt;phase&gt;</span></pre>
+        </div>
+      </div>
+      <div class="cli-beat">
+        <div class="cli-cap">serve · sandbox + smoke test</div>
+        <div class="cli-term">
+          <div class="cli-bar"><i></i><i></i><i></i></div>
+          <pre><span class="cl g">$ rpress site serve mysite --smoke</span>
+<span class="cl">site http://localhost:8410</span>
+<span class="cl">  fr → /    es → /es/    admin → /admin</span>
+<span class="cl">  <span class="g">ok</span>  200   /</span>
+<span class="cl">  <span class="g">ok</span>  200   /es/</span>
+<span class="cl">  <span class="g">ok</span>  200   /recherche/  <span class="c">(pagefind)</span></span>
+<span class="cl">  <span class="g">ok</span>  303   /admin → /admin/login</span>
+<span class="cl g">smoke: 6 routes ok — sandbox ready</span></pre>
+        </div>
+      </div>
+      <div class="cli-beat">
+        <div class="cli-cap">deploy · explicit domain, never guessed</div>
+        <div class="cli-term">
+          <div class="cli-bar"><i></i><i></i><i></i></div>
+          <pre><span class="cl g">$ rpress site deploy mysite --target static \</span>
+<span class="cl g">    --domain https://mysite.com --dest vps:web:/var/www/mysite --yes</span>
+<span class="cl">deploy plan  site · static · https://mysite.com</span>
+<span class="cl">staged deploy-cache → https://mysite.com</span>
+<span class="cl">rsync cache/ + www/ → web:/var/www/mysite</span>
+<span class="cl g">deployed static → https://mysite.com</span>
+<span class="cl c"># targets: static · pages (wrangler) · vps (full app)</span></pre>
+        </div>
+      </div>
+      <div class="cli-dots"><i class="d on"></i><i class="d"></i><i class="d"></i><i class="d"></i></div>
+    </div>
+    <div class="pr-callout">Wizard on a TTY, flags everywhere else — <b>every question has a flag twin</b>, so an agent can drive the whole pipeline non-interactively (<code>--json</code>, <code>--smoke</code>, <code>--dry-run</code>). Sites stay compatible with <code>scripts/e2e-site.sh</code>.</div>
+  </div>
+</section>
+
 <section class="pr-foot">
   <div class="container">
     <div class="big">WordPress-compatible.<br>WordPress-free.</div>
@@ -333,4 +424,19 @@ const p = projects.find(x => x.id === 'rpress');
     <div><code>rpress migrate dump.sql</code></div>
   </div>
 </section>
+
+<script>
+(function(){
+  const stage=document.getElementById('cli-stage');
+  if(!stage)return;
+  const beats=Array.from(stage.querySelectorAll('.cli-beat'));
+  const dots=Array.from(stage.querySelectorAll('.cli-dots .d'));
+  let i=0,timer=null;
+  function show(n){beats.forEach((b,j)=>b.classList.toggle('on',j===n));dots.forEach((d,j)=>d.classList.toggle('on',j===n));}
+  function next(){i=(i+1)%beats.length;show(i);timer=setTimeout(next,6000);}
+  dots.forEach((d,j)=>d.addEventListener('click',()=>{i=j;clearTimeout(timer);show(i);timer=setTimeout(next,6000)}));
+  show(0);timer=setTimeout(next,6000);
+})();
+</script>
+
 </Base>
