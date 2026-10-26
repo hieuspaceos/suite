@@ -50,12 +50,19 @@ const p = projects.find(x => x.id === 'pressrs');
 .pr-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
 .pr-card code{background:rgba(255,255,255,.06);padding:1px 6px;border-radius:5px;font-size:12px}
 
-.pr-tbl{max-width:880px;margin:0 auto;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg2)}
-.pr-tbl .r{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:16px;padding:15px 22px;border-top:1px solid var(--border);font-size:14px;align-items:center}
-.pr-tbl .r:first-child{border-top:0;background:rgba(255,255,255,.03);font-weight:600}
-.pr-tbl .r>span:first-child{color:var(--muted)}
-.pr-tbl .r .ours{color:#7ee787}
+.pr-tbl{max-width:920px;margin:0 auto;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--bg2)}
+.pr-tbl .r{display:grid;grid-template-columns:1.1fr 1.2fr 1fr;gap:16px;padding:15px 22px;border-top:1px solid var(--border);font-size:14px;align-items:center}
+.pr-tbl .r:first-child{border-top:0;background:rgba(255,255,255,.04);font-weight:700}
+.pr-tbl .r>span:first-child{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.pr-tbl .r .ours{color:#7ee787;font-weight:600}
+.pr-tbl .r .ours::before{content:"✓ ";color:#7ee787;font-weight:700}
+.pr-tbl .r .ours--warn{color:#ffa657}
+.pr-tbl .r .ours--warn::before{content:"◐ ";color:#ffa657}
 .pr-tbl .r .bad{color:var(--muted)}
+.pr-tbl .r .bad::before{content:"✗ ";color:#f85149;font-weight:700;opacity:.85}
+.pr-tbl .r .bad--ok{color:var(--muted)}
+.pr-tbl .r .bad--ok::before{content:"— ";color:var(--muted)}
+.pr-tbl .r:nth-child(2n){background:rgba(255,255,255,.015)}
 
 .pr-arch{max-width:820px;margin:0 auto;border:1px solid var(--border);border-radius:14px;background:#0d0f14;padding:26px}
 .pr-arch pre{margin:0;font-size:13px;line-height:1.7;color:#c9d1d9;overflow:auto}
@@ -150,8 +157,8 @@ const p = projects.find(x => x.id === 'pressrs');
       <div class="r"><span>Size</span><span class="ours">~14 MB binary</span><span class="bad">~80 MB WP source + PHP runtime</span></div>
       <div class="r"><span>Attack surface</span><span class="ours">Rust binary only</span><span class="bad">wp-admin, xmlrpc, plugin CVEs</span></div>
       <div class="r"><span>Cache</span><span class="ours">Native — cache/ IS the site</span><span class="bad">Plugin bolt-on, expires/desyncs</span></div>
-      <div class="r"><span>Plugin ecosystem</span><span class="ours">Ports in src/ — gap is real</span><span class="bad">60k+ plugins</span></div>
-      <div class="r"><span>Dynamic public pages</span><span class="ours">No — by design</span><span class="bad">Yes</span></div>
+      <div class="r"><span>Plugin ecosystem</span><span class="ours--warn">Ports in src/ — gap is real</span><span class="bad--ok">60k+ plugins</span></div>
+      <div class="r"><span>Dynamic public pages</span><span class="ours--warn">No — by design</span><span class="bad--ok">Yes</span></div>
     </div>
     <div class="pr-callout">If your site is content — posts, pages, galleries, comments, reviews — the trade wins. If it's a store, a forum, or a membership app, <b>keep WordPress</b>.</div>
   </div>
