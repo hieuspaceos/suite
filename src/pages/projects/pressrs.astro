@@ -1,5 +1,4 @@
 ---
-// pressrs project page — one file per lang via the [lang] index pages' pattern.
 import Base from '../../layouts/Base.astro';
 import { t as i18n } from '../../data/apps.js';
 import { projects } from '../../data/projects.js';
@@ -10,32 +9,40 @@ const p = projects.find(x => x.id === 'pressrs');
 
 <Base lang={lang} i18n={t} title="pressrs — WordPress-parity CMS in one Rust binary">
 <section class="app-hero container">
-  <p class="replaces">Rust · MIT</p>
+  <p class="replaces">Rust · MIT · Open source</p>
   <h1>pressrs</h1>
   <p class="tagline">{p.tagline[lang] ?? p.tagline.en}</p>
   <div class="hero-cta">
     <a class="btn btn-primary" href={p.repo} target="_blank" rel="noopener">GitHub →</a>
   </div>
-
   <div class="meta-row">
-    <div class="meta-item"><span>Stack</span><b>Rust + SQLite</b></div>
     <div class="meta-item"><span>Binary</span><b>~14 MB</b></div>
     <div class="meta-item"><span>RAM</span><b>~30 MB</b></div>
+    <div class="meta-item"><span>Stack</span><b>Rust · axum · SQLite</b></div>
     <div class="meta-item"><span>Deploy</span><b>1 file</b></div>
     <div class="meta-item"><span>License</span><b>MIT</b></div>
   </div>
 </section>
 
 <section class="container">
-  <p class="app-desc">{p.desc[lang] ?? p.desc.en}</p>
+  <h2 class="section-title">What it is</h2>
+  <p class="app-desc" style="max-width:760px">
+    pressrs is a structural conversion of WordPress: the admin reproduces wp-admin screens one-for-one
+    (posts, pages, media, comments, users, menus, widgets, revisions, quick edit, bulk actions), but the
+    public site is served as <b>pre-rendered HTML from disk</b>. There is no PHP, no per-request render,
+    no plugin runtime — the CMS does the WP work once at publish time and then gets out of the way.
+  </p>
+</section>
 
+<section class="container">
+  <h2 class="section-title">Why it's faster and safer</h2>
   <div class="feature-grid">
-    <div class="feature-block"><div class="fi">⚡</div><b>Static serve</b><p>Public request = fs::read of a pre-rendered file. Render happens once on publish or first hit.</p></div>
-    <div class="feature-block"><div class="fi">🛡</div><b>No PHP surface</b><p>No wp-login.php, no xmlrpc.php, no plugin CVEs. In-memory sessions, argon2, CSRF per session.</p></div>
-    <div class="feature-block"><div class="fi">🧩</div><b>wp-admin parity</b><p>Posts, pages, media, comments, users, menus, widgets, revisions, quick-edit, bulk — same screens, same habits.</p></div>
-    <div class="feature-block"><div class="fi">📥</div><b>One-command migrate</b><p><code>pressrs migrate dump.sql</code> imports the WP dump, creates an admin, renders every page, prints credentials.</p></div>
-    <div class="feature-block"><div class="fi">🌐</div><b>SEO + llms.txt</b><p>Rank-Math-compatible meta, sitemap, RSS, robots.txt, JSON-LD — plus markdown mirrors and llms.txt for AI readers.</p></div>
-    <div class="feature-block"><div class="fi">🧭</div><b>SPA-feel nav</b><p>nav.js prefetches on hover and swaps the content node — fast without a framework.</p></div>
+    <div class="feature-block"><div class="fi">⚡</div><b>Static serve path</b><p>GET /bai-viet → <code>fs::read cache/bai-viet/index.html</code>. No DB query, no template render, ~100–1000× less work than a PHP request. Misses render once and write back (atomic tmp+rename).</p></div>
+    <div class="feature-block"><div class="fi">📦</div><b>14 MB binary, zero deps</b><p>SQLite is bundled (<code>rusqlite/bundled</code>) — no MySQL server, no PHP-FPM, no CGO. Deploy is <code>scp</code> one file; backup is <code>.db</code> + <code>www/</code>.</p></div>
+    <div class="feature-block"><div class="fi">🛡</div><b>Attack surface ≈ binary</b><p><code>GET /wp-admin</code> → 404. In-memory sessions (restart = logout), argon2 password hashing, per-session CSRF, upload allowlist (svg→octet-stream), nosniff headers, rate limits on intake + render-miss.</p></div>
+    <div class="feature-block"><div class="fi">🧩</div><b>wp-admin parity</b><p>Same screens, same habits: list views with All/Published/Drafts/Trash, row actions, Quick Edit, bulk edit, revisions diff, media library, menu builder, widget sidebars.</p></div>
+    <div class="feature-block"><div class="fi">🌐</div><b>SEO + AI-readable</b><p>Rank-Math-compatible meta, OG/Twitter cards, canonical, JSON-LD, sitemap, RSS, robots.txt — plus <code>.md</code> mirrors of every page and a generated <code>llms.txt</code>.</p></div>
+    <div class="feature-block"><div class="fi">🧭</div><b>SPA-feel nav</b><p><code>nav.js</code> prefetches on hover (speculation rules) and swaps the content node — no framework, no hydration cost.</p></div>
   </div>
 </section>
 
@@ -43,17 +50,58 @@ const p = projects.find(x => x.id === 'pressrs');
   <h2 class="section-title">vs WordPress</h2>
   <div class="vs-table">
     <div class="vs-row vs-head"><span></span><span class="vs-ours">pressrs</span><span>WordPress</span></div>
-    <div class="vs-row"><span>Request path</span><span class="vs-ours">fs::read cached file</span><span>PHP boot + 50–200 queries</span></div>
-    <div class="vs-row"><span>Deploy</span><span class="vs-ours">1 binary + 1 .db</span><span>PHP-FPM + MySQL + WP + plugins</span></div>
+    <div class="vs-row"><span>Public request</span><span class="vs-ours">fs::read cached file</span><span>PHP boot + 50–200 queries</span></div>
+    <div class="vs-row"><span>Stack</span><span class="vs-ours">1 binary + 1 .db</span><span>PHP-FPM + MySQL + WP + plugins</span></div>
     <div class="vs-row"><span>RAM</span><span class="vs-ours">~30 MB</span><span>~500 MB+</span></div>
+    <div class="vs-row"><span>Binary size</span><span class="vs-ours">~14 MB</span><span>~80 MB WP source + PHP runtime</span></div>
     <div class="vs-row"><span>Attack surface</span><span class="vs-ours">Rust binary only</span><span>wp-admin, xmlrpc, plugin CVEs</span></div>
+    <div class="vs-row"><span>Cache</span><span class="vs-ours">Native — cache/ IS the site</span><span>Plugin bolt-on, expires/desyncs</span></div>
     <div class="vs-row"><span>Plugin ecosystem</span><span class="vs-ours">Ports in src/ (the gap is real)</span><span>60k+ plugins</span></div>
     <div class="vs-row"><span>Dynamic public pages</span><span class="vs-ours">No — by design</span><span>Yes</span></div>
   </div>
 </section>
 
+<section class="container vs-wrap">
+  <h2 class="section-title">vs Next.js / headless stacks</h2>
+  <div class="vs-table">
+    <div class="vs-row vs-head"><span></span><span class="vs-ours">pressrs</span><span>Next.js + headless CMS</span></div>
+    <div class="vs-row"><span>Pieces</span><span class="vs-ours">1 process</span><span>Node server + CMS + DB + build pipeline</span></div>
+    <div class="vs-row"><span>Admin UI</span><span class="vs-ours">Built-in wp-admin parity</span><span>Separate SaaS or self-built</span></div>
+    <div class="vs-row"><span>Build step</span><span class="vs-ours">Per-page, on publish/miss — no full rebuild</span><span>Full SSG or ISR runtime</span></div>
+    <div class="vs-row"><span>Runtime</span><span class="vs-ours">~30 MB RSS, no GC pauses</span><span>Node + framework + data layer</span></div>
+    <div class="vs-row"><span>Ops</span><span class="vs-ours"><code>scp binary; run</code></span><span>Docker, env vars, build cache, CDN wiring</span></div>
+  </div>
+</section>
+
 <section class="container">
-  <h2 class="section-title">One command migration</h2>
+  <h2 class="section-title">Architecture</h2>
+  <div class="step-alt" style="max-width:760px;margin:0 auto">
+<pre style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;overflow:auto;font-size:13px;line-height:1.55">WP SQL dump ──► pressrs import ──► site.db (SQLite, bundled)
+
+Admin  /admin/* ──► axum handlers ──► save ──► regenerate page file
+
+Visitor GET /slug ──► public_page
+   hit  → fs::read cache/slug/index.html     (~µs)
+   miss → render_slug → atomic write-back    (once)
+   *.md → cache/slug/index.md   (markdown mirror)
+
+sitefx emits sitemap.xml · feed · robots.txt · llms.txt · redirects.map</pre>
+  </div>
+</section>
+
+<section class="container vs-wrap">
+  <h2 class="section-title">How small a VPS can it run on</h2>
+  <div class="vs-table">
+    <div class="vs-row vs-head"><span>VPS</span><span class="vs-ours">pressrs</span><span>WordPress</span></div>
+    <div class="vs-row"><span>512 MB</span><span class="vs-ours">Several sites, headroom left</span><span>MySQL alone wants ~400 MB — swap-thrash territory</span></div>
+    <div class="vs-row"><span>1 GB</span><span class="vs-ours">Dozens of sites behind one nginx</span><span>Tight: PHP workers + MySQL eat it</span></div>
+    <div class="vs-row"><span>2 GB</span><span class="vs-ours">Effectively unlimited for a blog fleet</span><span>Comfortable single site</span></div>
+  </div>
+  <p class="perm" style="text-align:center">pressrs idles at ~30 MB RSS and only does real work on cache-miss renders — the OS page cache serves the rest. A $5/mo VPS (1 GB) is not a constraint; it's overkill.</p>
+</section>
+
+<section class="container">
+  <h2 class="section-title">Migrate in one command</h2>
   <div class="step-alt" style="max-width:760px;margin:0 auto">
 <pre style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;overflow:auto;font-size:14px">cargo build --release
 ./target/release/pressrs migrate dump.sql --db site.db \
@@ -62,5 +110,6 @@ const p = projects.find(x => x.id === 'pressrs');
 ./target/release/pressrs serve --site default --db site.db \
     --templates templates --out cache --www www --bind 127.0.0.1:8000</pre>
   </div>
+  <p class="perm" style="text-align:center"><code>migrate</code> imports the dump, creates an admin user (password printed once), renders every page into <code>cache/</code>. The cache then warms itself from traffic — cold start is not required.</p>
 </section>
 </Base>
