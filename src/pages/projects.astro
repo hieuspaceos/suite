@@ -18,15 +18,16 @@ const t = i18n[lang];
   <div class="apps-grid">
     {projects.map((p) => (
       <article class="app-tile">
-        <div class="app-tile-body">
+        <a class="app-tile-body" href={lang === 'en' ? `/projects/${p.id}` : `/${lang}/projects/${p.id}`} style="text-decoration:none;color:inherit;display:block">
           <div>
             <p class="replaces">{p.lang}</p>
-            <h3><a href={lang === 'en' ? `/projects/${p.id}` : `/${lang}/projects/${p.id}`}>{p.name}</a></h3>
+            <h3>{p.name}</h3>
             <p class="tagline">{p.tagline[lang] ?? p.tagline.en}</p>
             <p class="tagline dim">{p.desc[lang] ?? p.desc.en}</p>
           </div>
-        </div>
+        </a>
         <div class="tile-cta">
+          <a class="btn btn-ghost" href={lang === 'en' ? `/projects/${p.id}` : `/${lang}/projects/${p.id}`}>View project →</a>
           <a class="btn btn-primary" href={p.repo} target="_blank" rel="noopener">GitHub →</a>
         </div>
       </article>
