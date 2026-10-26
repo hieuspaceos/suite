@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t as i18n } from '../../data/apps.js';
+import { projects } from '../../data/projects.js';
+const lang = 'zh';
+const t = i18n[lang];
+---
+
+<Base lang={lang} i18n={t} title="Projects — hieuspace">
+<section class="hero hero--slim">
+  <div class="container">
+    <h1 class="section-title">Projects</h1>
+    <p class="section-sub">Beyond macOS apps — systems, tools, and experiments.</p>
+  </div>
+</section>
+
+<section class="apps container">
+  <div class="apps-grid">
+    {projects.map((p) => (
+      <article class="app-tile">
+        <div class="app-tile-body">
+          <div>
+            <p class="replaces">{p.lang}</p>
+            <h3>{p.name}</h3>
+            <p class="tagline">{p.tagline[lang] ?? p.tagline.en}</p>
+            <p class="tagline dim">{p.desc[lang] ?? p.desc.en}</p>
+          </div>
+        </div>
+        <div class="tile-cta">
+          <a class="btn btn-primary" href={p.repo} target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+</Base>
