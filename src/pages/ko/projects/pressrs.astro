@@ -39,6 +39,7 @@ const p = projects.find(x => x.id === 'pressrs');
 .pr-term .c{color:#6a737d}.pr-term .g{color:#7ee787}.pr-term .o{color:#ffa657}.pr-term .p{color:#79c0ff}
 
 .pr-sec{padding:56px 0;border-top:1px solid var(--border)}
+.pr-sec--who{border-top:0;padding-top:32px}
 .pr-sec h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;letter-spacing:-.03em;text-align:center;margin:0 0 12px}
 .pr-sec .sub{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 44px;font-size:16px}
 
@@ -75,36 +76,49 @@ const p = projects.find(x => x.id === 'pressrs');
 .pr-foot .big{font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.03em}
 .pr-foot code{display:inline-block;margin-top:18px;background:#0d0f14;border:1px solid var(--border);
   border-radius:10px;padding:14px 22px;font-size:14px;color:#7ee787}
-@media(max-width:700px){.pr-meta .m{border-right:0;border-top:1px solid var(--border);width:50%}
-.pr-tbl .r{grid-template-columns:1fr;font-size:13px}}
+.pr-hero h1 .grad{background:linear-gradient(90deg,#ff6a00,#ffa657);-webkit-background-clip:text;background-clip:text;color:transparent}
 </style>
 
 <section class="pr-hero">
   <div class="container">
-    <span class="pr-kicker"><b>◆</b> WordPress-parity CMS · Rust · MIT</span>
-    <h1>pressrs</h1>
-    <p class="lede">{p.tagline[lang] ?? p.tagline.en}</p>
+    <span class="pr-kicker"><b>◆</b> Open source · Rust · MIT</span>
+    <h1>WordPress,<br><span class="grad">without WordPress.</span></h1>
+    <p class="lede">pressrs reproduces wp-admin pixel-for-workflow and serves the site as <b>static files</b>.
+    One 14 MB binary replaces PHP + MySQL + plugins. Import a WP dump, keep your editors' habits,
+    lose the attack surface.</p>
     <div class="pr-cta">
       <a class="pr-btn pr-btn--primary" href={p.repo} target="_blank" rel="noopener">★ Star on GitHub</a>
-      <a class="pr-btn pr-btn--ghost" href="#migrate">Migrate in one command ↓</a>
+      <a class="pr-btn pr-btn--ghost" href="#migrate">pressrs migrate dump.sql ↓</a>
     </div>
     <div class="pr-meta">
-      <div class="m"><span>Binary</span><b>~14 MB</b></div>
-      <div class="m"><span>RAM</span><b>~30 MB</b></div>
-      <div class="m"><span>Stack</span><b>axum · rusqlite</b></div>
-      <div class="m"><span>Deploy</span><b>1 file + 1 .db</b></div>
-      <div class="m"><span>Serve path</span><b>fs::read</b></div>
+      <div class="m"><span>Binary</span><b>14 MB</b></div>
+      <div class="m"><span>RAM</span><b>30 MB</b></div>
+      <div class="m"><span>TTFB</span><b>&lt;5 ms</b></div>
+      <div class="m"><span>Migrate</span><b>1 command</b></div>
+      <div class="m"><span>License</span><b>MIT</b></div>
     </div>
 
     <div class="pr-term">
       <div class="pr-term-bar"><i></i><i></i><i></i></div>
-      <pre><span class="c"># one command: dump → imported site + admin user + rendered cache</span>
+      <pre><span class="c"># one command: WP dump → imported site + admin user + rendered cache</span>
 <span class="g">$</span> pressrs <span class="o">migrate</span> dump.sql --site-url https://example.com
   → imported  <span class="p">1,240 posts</span>, 68 pages, 3 menus, 421 media
   → admin user <span class="p">admin@example.com</span> · password <span class="p">••••••••••••</span> (printed once)
   → rendered <span class="p">1,308 pages</span> → cache/
 <span class="g">$</span> pressrs serve --bind 127.0.0.1:8000 --db site.db
   → <span class="p">listening</span> · admin at /admin</pre>
+    </div>
+  </div>
+</section>
+
+<section class="pr-sec pr-sec--who">
+  <div class="container">
+    <h2>Who it's for</h2>
+    <p class="sub">Three different readers, same answer.</p>
+    <div class="pr-grid">
+      <div class="pr-card"><span class="n">For developers</span><b>Boring on purpose</b><p>One process. SQL lives in <code>src/db/sql/*.sql</code>, compile-time <code>include_str!</code>. Zero warnings, zero runtime deps, MIT. Read the whole serving path in one sitting.</p></div>
+      <div class="pr-card"><span class="n">For site owners</span><b>Cut the bill, keep the habit</b><p>Admin is wp-admin parity — editors don't relearn anything. $5 VPS replaces the managed-WP line item; backups are a <code>.db</code> + <code>www/</code> folder.</p></div>
+      <div class="pr-card"><span class="n">For the curious</span><b>WordPress minus PHP</b><p>What if you kept wp-admin but the site never executes code? That's the whole trick — render once at publish, read files forever after.</p></div>
     </div>
   </div>
 </section>
