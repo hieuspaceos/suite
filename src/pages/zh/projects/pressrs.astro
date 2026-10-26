@@ -225,6 +225,59 @@ const p = projects.find(x => x.id === 'pressrs');
 
 <section class="pr-sec">
   <div class="container">
+    <h2>How fast is the site, actually</h2>
+    <p class="sub">A public request is a file read. Here's what that means on the timeline.</p>
+    <div class="pr-arch">
+<svg viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace,Menlo,monospace" font-size="12" style="width:100%;height:auto">
+  <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--muted)"/></marker></defs>
+  <text x="20" y="24" fill="var(--muted)" font-size="11" letter-spacing="2">REQUEST → FIRST BYTE</text>
+
+  <!-- pressrs timeline -->
+  <text x="20" y="60" fill="#7ee787" font-weight="700">pressrs</text>
+  <rect x="20" y="72" width="70" height="26" rx="6" fill="none" stroke="#7ee787"/>
+  <text x="55" y="89" fill="var(--fg)" text-anchor="middle" font-size="10">route</text>
+  <rect x="90" y="72" width="120" height="26" rx="6" fill="none" stroke="#7ee787"/>
+  <text x="150" y="89" fill="var(--fg)" text-anchor="middle" font-size="10">fs::read</text>
+  <rect x="210" y="72" width="80" height="26" rx="6" fill="#7ee787" opacity=".18"/>
+  <text x="250" y="89" fill="#7ee787" text-anchor="middle" font-size="10" font-weight="700">~µs–2 ms</text>
+  <text x="20" y="122" fill="var(--muted)" font-size="10">TCP + kernel sendfile; total &lt;5 ms typical</text>
+
+  <!-- WordPress timeline -->
+  <text x="20" y="168" fill="#f85149" font-weight="700">WordPress</text>
+  <rect x="20" y="180" width="60" height="26" rx="6" fill="none" stroke="var(--border)"/>
+  <text x="50" y="197" fill="var(--fg)" text-anchor="middle" font-size="10">nginx</text>
+  <rect x="80" y="180" width="80" height="26" rx="6" fill="none" stroke="var(--border)"/>
+  <text x="120" y="197" fill="var(--fg)" text-anchor="middle" font-size="10">PHP-FPM</text>
+  <rect x="160" y="180" width="90" height="26" rx="6" fill="none" stroke="var(--border)"/>
+  <text x="205" y="197" fill="var(--fg)" text-anchor="middle" font-size="10">WP boot</text>
+  <rect x="250" y="180" width="120" height="26" rx="6" fill="none" stroke="var(--border)"/>
+  <text x="310" y="197" fill="var(--fg)" text-anchor="middle" font-size="10">plugins load</text>
+  <rect x="370" y="180" width="130" height="26" rx="6" fill="none" stroke="var(--border)"/>
+  <text x="435" y="197" fill="var(--fg)" text-anchor="middle" font-size="10">50–200 SQL</text>
+  <rect x="500" y="180" width="90" height="26" rx="6" fill="none" stroke="var(--border)"/>
+  <text x="545" y="197" fill="var(--fg)" text-anchor="middle" font-size="10">render tpl</text>
+  <rect x="590" y="180" width="90" height="26" rx="6" fill="#f85149" opacity=".18"/>
+  <text x="635" y="197" fill="#f85149" text-anchor="middle" font-size="10" font-weight="700">200–800 ms</text>
+  <text x="20" y="230" fill="var(--muted)" font-size="10">before the first byte leaves</text>
+
+  <!-- delta -->
+  <line x1="700" y1="85" x2="700" y2="195" stroke="var(--border)" stroke-dasharray="3 3"/>
+  <text x="712" y="145" fill="#ff6a00" font-size="11" font-weight="700">40–400× faster TTFB</text>
+  <text x="712" y="160" fill="var(--muted)" font-size="10">structural, not tuned</text>
+</svg>
+    </div>
+    <div class="pr-grid" style="margin-top:36px">
+      <div class="pr-card"><span class="n">TTFB</span><b>&lt;5 ms typical</b><p>File is in OS page cache → kernel sends it without touching the process. PHP's ~300 ms median never appears.</p></div>
+      <div class="pr-card"><span class="n">LCP</span><b>Near-instant</b><p>HTML is complete on first byte — no render-blocking PHP, no hydration waiting on JS. Largest Contentful Paint lands with the document.</p></div>
+      <div class="pr-card"><span class="n">CLS</span><b>0 by design</b><p>No runtime layout injection — content is final HTML at serve time. Fonts and images are the only variables left.</p></div>
+      <div class="pr-card"><span class="n">Perceived nav</span><b>Instant on hover</b><p><code>nav.js</code> speculation-rules prefetch warms the next page before the click; swap replaces the content node — feels like an SPA, costs like a file read.</p></div>
+    </div>
+    <div class="pr-callout"><b>The honest caveat:</b> LCP depends on your theme's CSS/JS weight as much as the server. pressrs removes the server-side ceiling — theme weight is the next bottleneck, and it's fully in your control.</div>
+  </div>
+</section>
+
+<section class="pr-sec">
+  <div class="container">
     <h2>How small a VPS does it need</h2>
     <p class="sub">The whole point: it fits where WordPress can't.</p>
     <div class="pr-tbl">
