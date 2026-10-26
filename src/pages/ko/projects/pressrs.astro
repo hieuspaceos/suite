@@ -1,0 +1,66 @@
+---
+// pressrs project page — one file per lang via the [lang] index pages' pattern.
+import Base from '../../../layouts/Base.astro';
+import { t as i18n } from '../../../data/apps.js';
+import { projects } from '../../../data/projects.js';
+const lang = 'ko';
+const t = i18n[lang];
+const p = projects.find(x => x.id === 'pressrs');
+---
+
+<Base lang={lang} i18n={t} title="pressrs — WordPress-parity CMS in one Rust binary">
+<section class="app-hero container">
+  <p class="replaces">Rust · MIT</p>
+  <h1>pressrs</h1>
+  <p class="tagline">{p.tagline[lang] ?? p.tagline.en}</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href={p.repo} target="_blank" rel="noopener">GitHub →</a>
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-item"><span>Stack</span><b>Rust + SQLite</b></div>
+    <div class="meta-item"><span>Binary</span><b>~14 MB</b></div>
+    <div class="meta-item"><span>RAM</span><b>~30 MB</b></div>
+    <div class="meta-item"><span>Deploy</span><b>1 file</b></div>
+    <div class="meta-item"><span>License</span><b>MIT</b></div>
+  </div>
+</section>
+
+<section class="container">
+  <p class="app-desc">{p.desc[lang] ?? p.desc.en}</p>
+
+  <div class="feature-grid">
+    <div class="feature-block"><div class="fi">⚡</div><b>Static serve</b><p>Public request = fs::read of a pre-rendered file. Render happens once on publish or first hit.</p></div>
+    <div class="feature-block"><div class="fi">🛡</div><b>No PHP surface</b><p>No wp-login.php, no xmlrpc.php, no plugin CVEs. In-memory sessions, argon2, CSRF per session.</p></div>
+    <div class="feature-block"><div class="fi">🧩</div><b>wp-admin parity</b><p>Posts, pages, media, comments, users, menus, widgets, revisions, quick-edit, bulk — same screens, same habits.</p></div>
+    <div class="feature-block"><div class="fi">📥</div><b>One-command migrate</b><p><code>pressrs migrate dump.sql</code> imports the WP dump, creates an admin, renders every page, prints credentials.</p></div>
+    <div class="feature-block"><div class="fi">🌐</div><b>SEO + llms.txt</b><p>Rank-Math-compatible meta, sitemap, RSS, robots.txt, JSON-LD — plus markdown mirrors and llms.txt for AI readers.</p></div>
+    <div class="feature-block"><div class="fi">🧭</div><b>SPA-feel nav</b><p>nav.js prefetches on hover and swaps the content node — fast without a framework.</p></div>
+  </div>
+</section>
+
+<section class="container vs-wrap">
+  <h2 class="section-title">vs WordPress</h2>
+  <div class="vs-table">
+    <div class="vs-row vs-head"><span></span><span class="vs-ours">pressrs</span><span>WordPress</span></div>
+    <div class="vs-row"><span>Request path</span><span class="vs-ours">fs::read cached file</span><span>PHP boot + 50–200 queries</span></div>
+    <div class="vs-row"><span>Deploy</span><span class="vs-ours">1 binary + 1 .db</span><span>PHP-FPM + MySQL + WP + plugins</span></div>
+    <div class="vs-row"><span>RAM</span><span class="vs-ours">~30 MB</span><span>~500 MB+</span></div>
+    <div class="vs-row"><span>Attack surface</span><span class="vs-ours">Rust binary only</span><span>wp-admin, xmlrpc, plugin CVEs</span></div>
+    <div class="vs-row"><span>Plugin ecosystem</span><span class="vs-ours">Ports in src/ (the gap is real)</span><span>60k+ plugins</span></div>
+    <div class="vs-row"><span>Dynamic public pages</span><span class="vs-ours">No — by design</span><span>Yes</span></div>
+  </div>
+</section>
+
+<section class="container">
+  <h2 class="section-title">One command migration</h2>
+  <div class="step-alt" style="max-width:760px;margin:0 auto">
+<pre style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;overflow:auto;font-size:14px">cargo build --release
+./target/release/pressrs migrate dump.sql --db site.db \
+    --templates templates --out cache --www www \
+    --site-url https://example.com
+./target/release/pressrs serve --site default --db site.db \
+    --templates templates --out cache --www www --bind 127.0.0.1:8000</pre>
+  </div>
+</section>
+</Base>

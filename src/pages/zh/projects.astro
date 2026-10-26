@@ -21,7 +21,7 @@ const t = i18n[lang];
         <div class="app-tile-body">
           <div>
             <p class="replaces">{p.lang}</p>
-            <h3>{p.name}</h3>
+            <h3><a href={`/zh/projects/${p.id}`}>{p.name}</a></h3>
             <p class="tagline">{p.tagline[lang] ?? p.tagline.en}</p>
             <p class="tagline dim">{p.desc[lang] ?? p.desc.en}</p>
           </div>
