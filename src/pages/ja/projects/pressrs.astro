@@ -62,7 +62,7 @@ const p = projects.find(x => x.id === 'pressrs');
 .pr-tbl .r .bad::before{content:"✗ ";color:#f85149;font-weight:700;opacity:.85}
 .pr-tbl .r .bad--ok{color:var(--muted)}
 .pr-tbl .r .bad--ok::before{content:"— ";color:var(--muted)}
-.pr-tbl .r:nth-child(2n){background:rgba(255,255,255,.015)}
+.pr-tbl--4 .r{grid-template-columns:1fr 1.25fr 1.15fr 1.15fr;font-size:13px}
 
 .pr-arch{max-width:820px;margin:0 auto;border:1px solid var(--border);border-radius:14px;background:#0d0f14;padding:26px}
 .pr-arch pre{margin:0;font-size:13px;line-height:1.7;color:#c9d1d9;overflow:auto}
@@ -147,35 +147,24 @@ const p = projects.find(x => x.id === 'pressrs');
 
 <section class="pr-sec">
   <div class="container">
-    <h2>vs WordPress</h2>
-    <p class="sub">The honest trade — what you gain, and what you give up.</p>
-    <div class="pr-tbl">
-      <div class="r"><span></span><span class="ours">pressrs</span><span>WordPress</span></div>
-      <div class="r"><span>Public request</span><span class="ours">fs::read cached file</span><span class="bad">PHP boot + 50–200 queries</span></div>
-      <div class="r"><span>Stack</span><span class="ours">1 binary + 1 .db</span><span class="bad">PHP-FPM + MySQL + WP + plugins</span></div>
-      <div class="r"><span>RAM</span><span class="ours">~30 MB</span><span class="bad">~500 MB+</span></div>
-      <div class="r"><span>Size</span><span class="ours">~14 MB binary</span><span class="bad">~80 MB WP source + PHP runtime</span></div>
-      <div class="r"><span>Attack surface</span><span class="ours">Rust binary only</span><span class="bad">wp-admin, xmlrpc, plugin CVEs</span></div>
-      <div class="r"><span>Cache</span><span class="ours">Native — cache/ IS the site</span><span class="bad">Plugin bolt-on, expires/desyncs</span></div>
-      <div class="r"><span>Plugin ecosystem</span><span class="ours--warn">Ports in src/ — gap is real</span><span class="bad--ok">60k+ plugins</span></div>
-      <div class="r"><span>Dynamic public pages</span><span class="ours--warn">No — by design</span><span class="bad--ok">Yes</span></div>
+    <h2>pressrs vs WordPress vs Next.js</h2>
+    <p class="sub">Same outcome — a site. Different operating cost, attack surface, and admin experience.</p>
+    <div class="pr-tbl pr-tbl--4">
+      <div class="r"><span></span><span class="ours">pressrs</span><span>WordPress</span><span>Next.js + headless CMS</span></div>
+      <div class="r"><span>Public request</span><span class="ours">fs::read cached file</span><span class="bad">PHP boot + 50–200 queries</span><span class="bad">Static file or SSR per page</span></div>
+      <div class="r"><span>Pieces</span><span class="ours">1 binary + 1 .db</span><span class="bad">PHP-FPM + MySQL + WP + plugins</span><span class="bad">Node + CMS + DB + build</span></div>
+      <div class="r"><span>RAM</span><span class="ours">~30 MB</span><span class="bad">~500 MB+</span><span class="bad">Node + framework baseline</span></div>
+      <div class="r"><span>Admin UI</span><span class="ours">Built-in wp-admin parity</span><span class="bad--ok">wp-admin</span><span class="bad">Separate SaaS or DIY</span></div>
+      <div class="r"><span>Build step</span><span class="ours">Per-page, on publish/miss</span><span class="bad--ok">None</span><span class="bad">Full SSG or ISR runtime</span></div>
+      <div class="r"><span>Attack surface</span><span class="ours">Rust binary only</span><span class="bad">wp-admin, xmlrpc, plugin CVEs</span><span class="bad">Node deps + CMS API keys</span></div>
+      <div class="r"><span>Cache model</span><span class="ours">Native — cache/ IS the site</span><span class="bad">Plugin bolt-on, expires/desyncs</span><span class="bad">ISR / edge cache config</span></div>
+      <div class="r"><span>Ops</span><span class="ours">scp binary; run</span><span class="bad">Patch PHP/WP/plugins forever</span><span class="bad">Docker, env vars, build cache, CDN wiring</span></div>
+      <div class="r"><span>Plugin ecosystem</span><span class="ours--warn">Ports in src/ — gap is real</span><span class="bad--ok">60k+ plugins</span><span class="bad--ok">npm + CMS marketplace</span></div>
+      <div class="r"><span>Dynamic public pages</span><span class="ours--warn">No — by design</span><span class="bad--ok">Yes</span><span class="bad--ok">Yes (SSR/edge)</span></div>
+      <div class="r"><span>Migration</span><span class="ours">One command — imports WP dump</span><span class="bad">—</span><span class="bad">Rebuild content model + theme</span></div>
+      <div class="r"><span>Best for</span><span class="ours">Content sites, blog fleets, lean ops</span><span class="bad">Stores, forums, membership</span><span class="bad">Apps that are mostly dynamic</span></div>
     </div>
-    <div class="pr-callout">If your site is content — posts, pages, galleries, comments, reviews — the trade wins. If it's a store, a forum, or a membership app, <b>keep WordPress</b>.</div>
-  </div>
-</section>
-
-<section class="pr-sec">
-  <div class="container">
-    <h2>vs Next.js + headless CMS</h2>
-    <p class="sub">The same outcome — static output — with fewer moving parts.</p>
-    <div class="pr-tbl">
-      <div class="r"><span></span><span class="ours">pressrs</span><span>Next.js + headless</span></div>
-      <div class="r"><span>Processes</span><span class="ours">1</span><span class="bad">Node server + CMS + DB + build</span></div>
-      <div class="r"><span>Admin UI</span><span class="ours">Built-in wp-admin parity</span><span class="bad">Separate SaaS or DIY</span></div>
-      <div class="r"><span>Build step</span><span class="ours">Per-page, on publish/miss</span><span class="bad">Full SSG or ISR runtime</span></div>
-      <div class="r"><span>Runtime</span><span class="ours">~30 MB RSS, no GC pause</span><span class="bad">Node + framework + data layer</span></div>
-      <div class="r"><span>Ops</span><span class="ours">scp binary; run</span><span class="bad">Docker, env vars, build cache, CDN wiring</span></div>
-    </div>
+    <div class="pr-callout">Content sites — posts, pages, galleries, comments, reviews — pressrs wins on every row that matters. Store/forum/membership → keep WordPress. Mostly-an-app → Next.js fits better.</div>
   </div>
 </section>
 
