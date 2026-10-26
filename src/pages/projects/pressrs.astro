@@ -160,18 +160,55 @@ const p = projects.find(x => x.id === 'pressrs');
 <section class="pr-sec">
   <div class="container">
     <h2>Architecture</h2>
-    <p class="sub">One process, three layers — SQL in <code>src/db/sql/*.sql</code>, compile-time embedded.</p>
+    <p class="sub">Two paths, deliberately separated: write once at publish, read many at serve.</p>
     <div class="pr-arch">
-<pre><span class="c">WP SQL dump ──► pressrs import ──► site.db</span>  <span class="c">(SQLite, bundled)</span>
-
-<span class="p">Admin   /admin/*</span>  ──► axum handlers ──► save ──► regenerate page file
-<span class="p">Visitor GET /slug</span> ──► public_page
-     hit   → fs::read cache/slug/index.html      <span class="c">~µs</span>
-     miss  → render_slug → atomic write-back      <span class="c">once</span>
-     *.md  → cache/slug/index.md                 <span class="c">markdown mirror</span>
-
-<span class="p">sitefx</span> emits sitemap.xml · feed · robots.txt · llms.txt · redirects.map</pre>
+<svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace,Menlo,monospace" font-size="12" style="width:100%;height:auto">
+  <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--muted)"/></marker></defs>
+  <text x="20" y="24" fill="#ff6a00" font-size="11" letter-spacing="2">PUBLISH — once</text>
+  <rect x="20" y="36" width="180" height="44" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="110" y="62" fill="var(--fg)" text-anchor="middle">admin save / migrate</text>
+  <line x1="200" y1="58" x2="250" y2="58" stroke="var(--muted)" marker-end="url(#ah)"/>
+  <rect x="250" y="36" width="160" height="44" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="330" y="62" fill="var(--fg)" text-anchor="middle">render_slug + minijinja</text>
+  <line x1="410" y1="58" x2="460" y2="58" stroke="var(--muted)" marker-end="url(#ah)"/>
+  <rect x="460" y="36" width="190" height="44" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="555" y="62" fill="var(--fg)" text-anchor="middle">atomic write → cache/</text>
+  <text x="20" y="140" fill="#7ee787" font-size="11" letter-spacing="2">SERVE — per request</text>
+  <rect x="20" y="152" width="160" height="44" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="100" y="178" fill="var(--fg)" text-anchor="middle">GET /slug</text>
+  <line x1="180" y1="174" x2="230" y2="174" stroke="var(--muted)" marker-end="url(#ah)"/>
+  <rect x="230" y="152" width="140" height="44" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="300" y="178" fill="var(--fg)" text-anchor="middle">public_page</text>
+  <line x1="370" y1="165" x2="460" y2="140" stroke="var(--muted)" marker-end="url(#ah)"/>
+  <rect x="460" y="112" width="200" height="44" rx="10" fill="var(--surface)" stroke="#7ee787"/>
+  <text x="560" y="130" fill="#7ee787" text-anchor="middle" font-weight="600">hit</text>
+  <text x="560" y="147" fill="var(--fg)" text-anchor="middle">fs::read → 200 (~µs)</text>
+  <line x1="370" y1="185" x2="460" y2="215" stroke="var(--muted)" marker-end="url(#ah)"/>
+  <rect x="460" y="192" width="200" height="44" rx="10" fill="var(--surface)" stroke="var(--border)"/>
+  <text x="560" y="210" fill="var(--muted)" text-anchor="middle" font-weight="600">miss</text>
+  <text x="560" y="227" fill="var(--fg)" text-anchor="middle">render → write-back → 200</text>
+  <line x1="300" y1="196" x2="300" y2="260" stroke="var(--muted)" marker-end="url(#ah)"/>
+  <rect x="230" y="260" width="180" height="40" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="320" y="284" fill="var(--fg)" text-anchor="middle">GET /slug.md → index.md</text>
+  <text x="20" y="345" fill="var(--muted)" font-size="11" letter-spacing="2">ON DISK</text>
+  <rect x="20" y="356" width="180" height="52" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="110" y="378" fill="var(--fg)" text-anchor="middle">site.db (SQLite)</text>
+  <text x="110" y="396" fill="var(--muted)" text-anchor="middle" font-size="10">posts · terms · users · settings</text>
+  <rect x="230" y="356" width="200" height="52" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="330" y="378" fill="var(--fg)" text-anchor="middle">cache/&lt;slug&gt;/index.html</text>
+  <text x="330" y="396" fill="var(--muted)" text-anchor="middle" font-size="10">the served site — disposable</text>
+  <rect x="460" y="356" width="200" height="52" rx="10" fill="none" stroke="var(--border)"/>
+  <text x="560" y="378" fill="var(--fg)" text-anchor="middle">www/ uploads · nav.js · css</text>
+  <text x="560" y="396" fill="var(--muted)" text-anchor="middle" font-size="10">persistent — back this up</text>
+  <rect x="690" y="152" width="150" height="96" rx="10" fill="none" stroke="var(--border)" stroke-dasharray="4 4"/>
+  <text x="765" y="174" fill="var(--muted)" text-anchor="middle">sitefx (on publish)</text>
+  <text x="765" y="192" fill="var(--fg)" text-anchor="middle">sitemap.xml · feed</text>
+  <text x="765" y="208" fill="var(--fg)" text-anchor="middle">robots.txt · llms.txt</text>
+  <text x="765" y="224" fill="var(--fg)" text-anchor="middle">redirects.map</text>
+</svg>
     </div>
+    <div class="pr-callout"><b>The cache is the site.</b> nginx can front <code>cache/</code> directly — pressrs is then only needed for admin and misses. Restarting or upgrading the binary never loses content: the DB is the source of truth, the cache rebuilds.</div>
+    <p class="sub" style="margin-top:36px">Layered source: SQL lives in <code>src/db/sql/*.sql</code> (compile-time <code>include_str!</code>), admin handlers call <code>db::</code> only, render owns the publish path. One process, no service mesh.</p>
   </div>
 </section>
 
